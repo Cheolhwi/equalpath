@@ -1,0 +1,84 @@
+[
+  {
+    "$id": "iteration1-core",
+    "name": "EqualPath Iteration 1 Core",
+    "runtime": "node-22",
+    "path": "../functions/iteration1-core",
+    "entrypoint": "src/main.js",
+    "commands": "npm install --omit=dev",
+    "execute": [
+      "users"
+    ],
+    "events": [
+      "users.*.create",
+      "tablesdb.equalpath.tables.schedule_patterns.rows.*",
+      "tablesdb.equalpath.tables.work_commitments.rows.*",
+      "tablesdb.equalpath.tables.care_commitments.rows.*",
+      "tablesdb.equalpath.tables.children.rows.*"
+    ],
+    "schedule": "0 * * * *",
+    "timeout": 120,
+    "enabled": true,
+    "logging": true,
+    "ignore": [
+      "node_modules",
+      ".git",
+      "test"
+    ],
+    "scopes": [
+      "rows.read",
+      "rows.write",
+      "users.read"
+    ],
+    "vars": [
+      {
+        "key": "EQUALPATH_DATABASE_ID",
+        "value": "equalpath",
+        "secret": false
+      },
+      {
+        "key": "EQUALPATH_TIMEZONE",
+        "value": "Asia/Kuala_Lumpur",
+        "secret": false
+      },
+      {
+        "key": "EQUALPATH_HORIZON_DAYS",
+        "value": "14",
+        "secret": false
+      }
+    ]
+  },
+  {
+    "$id": "delete-account",
+    "name": "EqualPath Delete Account",
+    "runtime": "node-22",
+    "path": "../functions/delete-account",
+    "entrypoint": "src/main.js",
+    "commands": "npm install --omit=dev",
+    "execute": [
+      "users"
+    ],
+    "events": [],
+    "schedule": "",
+    "timeout": 120,
+    "enabled": true,
+    "logging": true,
+    "ignore": [
+      "node_modules",
+      ".git",
+      "test"
+    ],
+    "scopes": [
+      "rows.read",
+      "rows.write",
+      "users.write"
+    ],
+    "vars": [
+      {
+        "key": "EQUALPATH_DATABASE_ID",
+        "value": "equalpath",
+        "secret": false
+      }
+    ]
+  }
+]

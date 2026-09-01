@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <radialGradient id="blueGlow" cx="0" cy="0" r="1" gradientTransform="translate(164 160) rotate(42) scale(730)">
+      <stop offset="0" stop-color="#4A6BE8" stop-opacity=".48"/>
+      <stop offset=".58" stop-color="#1B2758" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#080D1E" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="goldGlow" cx="0" cy="0" r="1" gradientTransform="translate(820 292) rotate(132) scale(560)">
+      <stop offset="0" stop-color="#E3B85C" stop-opacity=".24"/>
+      <stop offset="1" stop-color="#080D1E" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="upperPath" x1="150" y1="320" x2="870" y2="660" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#93A9F7"/>
+      <stop offset=".52" stop-color="#4A6BE8"/>
+      <stop offset="1" stop-color="#E3B85C"/>
+    </linearGradient>
+    <linearGradient id="lowerPath" x1="150" y1="700" x2="870" y2="380" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E3B85C"/>
+      <stop offset=".52" stop-color="#4A6BE8"/>
+      <stop offset="1" stop-color="#93A9F7"/>
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="#080D1E"/>
+  <rect width="1024" height="1024" rx="220" fill="url(#blueGlow)"/>
+  <rect width="1024" height="1024" rx="220" fill="url(#goldGlow)"/>
+  <path d="M142 348C326 215 413 360 512 512C611 664 698 809 882 676" fill="none" stroke="#4A6BE8" stroke-opacity=".18" stroke-width="92" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M142 348C326 215 413 360 512 512C611 664 698 809 882 676" fill="none" stroke="url(#upperPath)" stroke-width="46" stroke-linecap="round"/>
+  <path d="M142 676C326 809 413 664 512 512C611 360 698 215 882 348" fill="none" stroke="#E3B85C" stroke-opacity=".12" stroke-width="92" stroke-linecap="round" filter="url(#glow)"/>
+  <path d="M142 676C326 809 413 664 512 512C611 360 698 215 882 348" fill="none" stroke="url(#lowerPath)" stroke-width="46" stroke-linecap="round"/>
+  <polygon points="512,374 650,512 512,650 374,512" fill="#F3D391"/>
+  <polygon points="512,400 624,512 512,624 400,512" fill="#0C1226"/>
+  <polygon points="512,463 561,512 512,561 463,512" fill="#E3B85C"/>
+  <circle cx="142" cy="348" r="24" fill="#F3D391"/>
+  <circle cx="142" cy="676" r="24" fill="#93A9F7"/>
+  <circle cx="882" cy="348" r="24" fill="#93A9F7"/>
+  <circle cx="882" cy="676" r="24" fill="#F3D391"/>
+</svg>

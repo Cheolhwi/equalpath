@@ -1,0 +1,59 @@
+name: Bug report
+description: Report a reproducible Iteration 1 defect
+title: "[Bug] "
+labels: [bug, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping review the frozen Iteration 1 baseline. Do not include personal health information, credentials, or live user data.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - iOS app
+        - Appwrite backend
+        - Build or CI
+        - Documentation or evidence
+    validations:
+      required: true
+  - type: input
+    id: acceptance-criterion
+    attributes:
+      label: Acceptance Criterion
+      description: If known, provide the E0/E1/E2 acceptance-criterion identifier.
+      placeholder: AC 1.2.3
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Start from a clean state and list each action.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment and evidence
+      description: Include app version, device/OS, logs, or privacy-safe screenshots.
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: I have removed credentials, tokens, personal health information, and live user data.
+          required: true
+

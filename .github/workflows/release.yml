@@ -1,0 +1,36 @@
+name: Release Iteration 1 Bundle
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Package checksummed release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build immutable source bundle
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          archive="equalpath-iteration1-${RELEASE_TAG}.zip"
+          git archive --format=zip --output="$archive" HEAD
+          sha256sum "$archive" > "$archive.sha256"
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          archive="equalpath-iteration1-${RELEASE_TAG}.zip"
+          gh release create "$RELEASE_TAG" "$archive" "$archive.sha256" \
+            --title "EqualPath Iteration 1 ${RELEASE_TAG}" \
+            --notes "Checksummed delivery bundle for the frozen EqualPath Iteration 1 submission baseline. This release does not deploy to the live Appwrite project."
+

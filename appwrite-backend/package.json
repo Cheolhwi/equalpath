@@ -1,0 +1,20 @@
+{
+  "name": "equalpath-appwrite-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "check": "node scripts/validate-config.mjs",
+    "test": "node --test tests/*.test.js",
+    "appwrite:version": "appwrite --version",
+    "push:tables": "appwrite push tables",
+    "push:functions": "appwrite push functions --with-variables",
+    "push:all": "appwrite push all"
+  },
+  "devDependencies": {
+    "appwrite-cli": "27.2.1"
+  }
+}

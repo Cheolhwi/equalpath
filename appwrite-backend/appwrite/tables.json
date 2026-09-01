@@ -1,0 +1,387 @@
+[
+  {
+    "$id": "users",
+    "$permissions": [],
+    "databaseId": "equalpath",
+    "name": "User profiles",
+    "enabled": true,
+    "rowSecurity": true,
+    "columns": [
+      { "key": "email", "type": "varchar", "size": 320, "required": true },
+      { "key": "display_name", "type": "varchar", "size": 128, "required": false },
+      { "key": "google_subject", "type": "varchar", "size": 255, "required": false },
+      { "key": "home_area", "type": "varchar", "size": 160, "required": false },
+      { "key": "work_area", "type": "varchar", "size": 160, "required": false },
+      { "key": "travel_home_care_min", "type": "integer", "required": false, "min": 0, "max": 360 },
+      { "key": "travel_care_work_min", "type": "integer", "required": false, "min": 0, "max": 360 },
+      { "key": "travel_home_work_min", "type": "integer", "required": false, "min": 0, "max": 360 },
+      { "key": "notify_hour", "type": "integer", "required": false, "min": 0, "max": 23, "default": 21 },
+      { "key": "language", "type": "varchar", "size": 8, "required": false, "default": "en" },
+      { "key": "timezone", "type": "varchar", "size": 64, "required": false, "default": "Asia/Kuala_Lumpur" },
+      { "key": "larger_text", "type": "boolean", "required": false, "default": false },
+      { "key": "alert_gap", "type": "boolean", "required": false, "default": true },
+      { "key": "alert_reply", "type": "boolean", "required": false, "default": true },
+      { "key": "alert_break", "type": "boolean", "required": false, "default": true },
+      { "key": "alert_weekly", "type": "boolean", "required": false, "default": false },
+      { "key": "onboarding_completed", "type": "boolean", "required": false, "default": false },
+      { "key": "last_successful_sweep_at", "type": "datetime", "required": false }
+    ],
+    "indexes": [
+      { "key": "email_unique", "type": "unique", "columns": ["email"] }
+    ]
+  },
+  {
+    "$id": "children",
+    "$permissions": [],
+    "databaseId": "equalpath",
+    "name": "Children",
+    "enabled": true,
+    "rowSecurity": true,
+    "columns": [
+      { "key": "user_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "display_name", "type": "varchar", "size": 80, "required": false },
+      { "key": "age_group", "type": "varchar", "size": 16, "required": true },
+      { "key": "active", "type": "boolean", "required": false, "default": true }
+    ],
+    "indexes": [
+      { "key": "by_owner", "type": "key", "columns": ["user_id"] },
+      { "key": "by_owner_active", "type": "key", "columns": ["user_id", "active"] }
+    ]
+  },
+  {
+    "$id": "schedule_patterns",
+    "$permissions": [],
+    "databaseId": "equalpath",
+    "name": "Weekly schedule patterns",
+    "enabled": true,
+    "rowSecurity": true,
+    "columns": [
+      { "key": "user_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "kind", "type": "varchar", "size": 32, "required": true },
+      { "key": "child_id", "type": "varchar", "size": 36, "required": false },
+      { "key": "byweekday", "type": "varchar", "size": 3, "required": true, "array": true },
+      { "key": "start_minute", "type": "integer", "required": true, "min": 0, "max": 1439 },
+      { "key": "end_minute", "type": "integer", "required": true, "min": 1, "max": 1440 },
+      { "key": "effective_from", "type": "varchar", "size": 10, "required": true },
+      { "key": "effective_until", "type": "varchar", "size": 10, "required": false },
+      { "key": "payload_json", "type": "text", "required": false },
+      { "key": "active", "type": "boolean", "required": false, "default": true }
+    ],
+    "indexes": [
+      { "key": "by_owner", "type": "key", "columns": ["user_id"] },
+      { "key": "by_owner_kind", "type": "key", "columns": ["user_id", "kind"] },
+      { "key": "by_child", "type": "key", "columns": ["child_id"] }
+    ]
+  },
+  {
+    "$id": "work_commitments",
+    "$permissions": [],
+    "databaseId": "equalpath",
+    "name": "Dated work commitments",
+    "enabled": true,
+    "rowSecurity": true,
+    "columns": [
+      { "key": "user_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "pattern_id", "type": "varchar", "size": 36, "required": false },
+      { "key": "is_override", "type": "boolean", "required": false, "default": false },
+      { "key": "date_local", "type": "varchar", "size": 10, "required": true },
+      { "key": "start_minute", "type": "integer", "required": true, "min": 0, "max": 1439 },
+      { "key": "end_minute", "type": "integer", "required": true, "min": 1, "max": 1440 },
+      { "key": "commitment_type", "type": "varchar", "size": 40, "required": false },
+      { "key": "location_mode", "type": "varchar", "size": 32, "required": false },
+      { "key": "remote_possible", "type": "boolean", "required": false, "default": false },
+      { "key": "flexibility_level", "type": "varchar", "size": 24, "required": false },
+      { "key": "priority", "type": "varchar", "size": 16, "required": false, "default": "fixed" },
+      { "key": "source_label", "type": "varchar", "size": 240, "required": false },
+      { "key": "span_group", "type": "varchar", "size": 36, "required": false },
+      { "key": "span_part", "type": "integer", "required": false, "min": 0, "max": 1 },
+      { "key": "status", "type": "varchar", "size": 20, "required": false, "default": "active" }
+    ],
+    "indexes": [
+      { "key": "by_owner_date", "type": "key", "columns": ["user_id", "date_local"] },
+      { "key": "by_pattern", "type": "key", "columns": ["pattern_id"] },
+      { "key": "by_span_group", "type": "key", "columns": ["span_group"] }
+    ]
+  },
+  {
+    "$id": "care_commitments",
+    "$permissions": [],
+    "databaseId": "equalpath",
+    "name": "Dated care requirements and coverage",
+    "enabled": true,
+    "rowSecurity": true,
+    "columns": [
+      { "key": "user_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "child_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "pattern_id", "type": "varchar", "size": 36, "required": false },
+      { "key": "is_override", "type": "boolean", "required": false, "default": false },
+      { "key": "entry_kind", "type": "varchar", "size": 16, "required": true },
+      { "key": "date_local", "type": "varchar", "size": 10, "required": true },
+      { "key": "start_minute", "type": "integer", "required": true, "min": 0, "max": 1439 },
+      { "key": "end_minute", "type": "integer", "required": true, "min": 1, "max": 1440 },
+      { "key": "resource_type", "type": "varchar", "size": 32, "required": false },
+      { "key": "resource_ref", "type": "varchar", "size": 36, "required": false },
+      { "key": "provider_id", "type": "varchar", "size": 36, "required": false },
+      { "key": "location_label", "type": "varchar", "size": 160, "required": false },
+      { "key": "collect_by_minute", "type": "integer", "required": false, "min": 0, "max": 1440 },
+      { "key": "handover_in_ref", "type": "varchar", "size": 36, "required": false },
+      { "key": "handover_out_ref", "type": "varchar", "size": 36, "required": false },
+      { "key": "band_state", "type": "varchar", "size": 16, "required": false, "default": "covered" },
+      { "key": "source_records", "type": "varchar", "size": 255, "required": false, "array": true },
+      { "key": "span_group", "type": "varchar", "size": 36, "required": false },
+      { "key": "span_part", "type": "integer", "required": false, "min": 0, "max": 1 },
+      { "key": "status", "type": "varchar", "size": 20, "required": false, "default": "active" }
+    ],
+    "indexes": [
+      { "key": "by_owner_date", "type": "key", "columns": ["user_id", "date_local"] },
+      { "key": "by_child_date", "type": "key", "columns": ["child_id", "date_local"] },
+      { "key": "by_pattern", "type": "key", "columns": ["pattern_id"] },
+      { "key": "by_span_group", "type": "key", "columns": ["span_group"] }
+    ]
+  },
+  {
+    "$id": "sweeps",
+    "$permissions": [],
+    "databaseId": "equalpath",
+    "name": "Conflict sweep executions",
+    "enabled": true,
+    "rowSecurity": true,
+    "columns": [
+      { "key": "user_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "started_at", "type": "datetime", "required": true },
+      { "key": "finished_at", "type": "datetime", "required": false },
+      { "key": "overall", "type": "varchar", "size": 16, "required": true },
+      { "key": "trigger", "type": "varchar", "size": 24, "required": true },
+      { "key": "window_start", "type": "varchar", "size": 10, "required": true },
+      { "key": "window_end", "type": "varchar", "size": 10, "required": true },
+      { "key": "per_source_json", "type": "text", "required": false },
+      { "key": "error_code", "type": "varchar", "size": 80, "required": false }
+    ],
+    "indexes": [
+      { "key": "by_owner_started", "type": "key", "columns": ["user_id", "started_at"] }
+    ]
+  },
+  {
+    "$id": "conflicts",
+    "$permissions": [],
+    "databaseId": "equalpath",
+    "name": "Materialised work-care conflicts",
+    "enabled": true,
+    "rowSecurity": true,
+    "columns": [
+      { "key": "user_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "child_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "date_local", "type": "varchar", "size": 10, "required": true },
+      { "key": "kind", "type": "varchar", "size": 24, "required": true },
+      { "key": "state", "type": "varchar", "size": 16, "required": true },
+      { "key": "start_minute", "type": "integer", "required": true, "min": 0, "max": 1439 },
+      { "key": "end_minute", "type": "integer", "required": true, "min": 1, "max": 1440 },
+      { "key": "duration_minutes", "type": "integer", "required": true, "min": 1, "max": 1440 },
+      { "key": "priority", "type": "varchar", "size": 16, "required": true },
+      { "key": "status", "type": "varchar", "size": 16, "required": true },
+      { "key": "source_records", "type": "varchar", "size": 255, "required": true, "array": true },
+      { "key": "deterministic_key", "type": "varchar", "size": 64, "required": true },
+      { "key": "detected_at", "type": "datetime", "required": true },
+      { "key": "last_verified_at", "type": "datetime", "required": true },
+      { "key": "resolved_at", "type": "datetime", "required": false },
+      { "key": "resolution_reason", "type": "varchar", "size": 40, "required": false },
+      { "key": "alerted_at", "type": "datetime", "required": false },
+      { "key": "alert_channel", "type": "varchar", "size": 16, "required": false },
+      { "key": "alert_error", "type": "varchar", "size": 160, "required": false }
+    ],
+    "indexes": [
+      { "key": "conflict_key_unique", "type": "unique", "columns": ["deterministic_key"] },
+      { "key": "by_owner_date", "type": "key", "columns": ["user_id", "date_local"] },
+      { "key": "by_owner_status", "type": "key", "columns": ["user_id", "status"] },
+      { "key": "by_alert_state", "type": "key", "columns": ["date_local", "status", "alerted_at"] }
+    ]
+  },
+  {
+    "$id": "support_network",
+    "$permissions": [],
+    "databaseId": "equalpath",
+    "name": "Support network",
+    "enabled": true,
+    "rowSecurity": true,
+    "columns": [
+      { "key": "user_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "display_name", "type": "varchar", "size": 100, "required": true },
+      { "key": "relationship", "type": "varchar", "size": 32, "required": true },
+      { "key": "available_json", "type": "text", "required": false },
+      { "key": "pickup_possible", "type": "boolean", "required": false, "default": false },
+      { "key": "emergency_only", "type": "boolean", "required": false, "default": false },
+      { "key": "reliability", "type": "integer", "required": false, "min": 1, "max": 5 },
+      { "key": "contact_ciphertext", "type": "varchar", "size": 512, "required": false, "encrypt": true },
+      { "key": "state", "type": "varchar", "size": 20, "required": false, "default": "active" }
+    ],
+    "indexes": [
+      { "key": "by_owner", "type": "key", "columns": ["user_id"] },
+      { "key": "by_owner_state", "type": "key", "columns": ["user_id", "state"] }
+    ]
+  },
+  {
+    "$id": "plans",
+    "$permissions": [],
+    "databaseId": "equalpath",
+    "name": "Immutable generated plans",
+    "enabled": true,
+    "rowSecurity": true,
+    "columns": [
+      { "key": "user_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "conflict_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "plan_set_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "input_hash", "type": "varchar", "size": 64, "required": true },
+      { "key": "generated_at", "type": "datetime", "required": true },
+      { "key": "score", "type": "double", "required": false },
+      { "key": "solver_status", "type": "varchar", "size": 24, "required": true },
+      { "key": "lifecycle_status", "type": "varchar", "size": 24, "required": true },
+      { "key": "supersedes_plan_id", "type": "varchar", "size": 36, "required": false },
+      { "key": "invalidated_at", "type": "datetime", "required": false },
+      { "key": "unavailable_resource_ref", "type": "varchar", "size": 36, "required": false },
+      { "key": "explanation", "type": "text", "required": false },
+      { "key": "explanation_source", "type": "varchar", "size": 16, "required": false },
+      { "key": "model_version", "type": "varchar", "size": 80, "required": false },
+      { "key": "metrics_json", "type": "text", "required": false }
+    ],
+    "indexes": [
+      { "key": "by_owner_conflict", "type": "key", "columns": ["user_id", "conflict_id"] },
+      { "key": "by_plan_set", "type": "key", "columns": ["plan_set_id"] },
+      { "key": "by_input_hash", "type": "key", "columns": ["input_hash"] }
+    ]
+  },
+  {
+    "$id": "plan_segments",
+    "$permissions": [],
+    "databaseId": "equalpath",
+    "name": "Plan segments",
+    "enabled": true,
+    "rowSecurity": true,
+    "columns": [
+      { "key": "user_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "plan_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "child_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "start_minute", "type": "integer", "required": true, "min": 0, "max": 1439 },
+      { "key": "end_minute", "type": "integer", "required": true, "min": 1, "max": 1440 },
+      { "key": "resource_type", "type": "varchar", "size": 32, "required": true },
+      { "key": "resource_ref", "type": "varchar", "size": 36, "required": false },
+      { "key": "status", "type": "varchar", "size": 20, "required": true }
+    ],
+    "indexes": [
+      { "key": "by_plan", "type": "key", "columns": ["plan_id", "start_minute"] },
+      { "key": "by_owner", "type": "key", "columns": ["user_id"] }
+    ]
+  },
+  {
+    "$id": "plan_feedback",
+    "$permissions": [],
+    "databaseId": "equalpath",
+    "name": "Plan outcome feedback",
+    "enabled": true,
+    "rowSecurity": true,
+    "columns": [
+      { "key": "user_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "plan_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "outcome", "type": "varchar", "size": 24, "required": true },
+      { "key": "confirmed_at", "type": "datetime", "required": true },
+      { "key": "notes", "type": "varchar", "size": 500, "required": false }
+    ],
+    "indexes": [
+      { "key": "one_feedback_per_plan", "type": "unique", "columns": ["plan_id"] },
+      { "key": "by_owner_confirmed", "type": "key", "columns": ["user_id", "confirmed_at"] }
+    ]
+  },
+  {
+    "$id": "confirmation_requests",
+    "$permissions": [],
+    "databaseId": "equalpath",
+    "name": "Plan confirmation requests",
+    "enabled": true,
+    "rowSecurity": true,
+    "columns": [
+      { "key": "user_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "plan_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "segment_id", "type": "varchar", "size": 36, "required": true },
+      { "key": "recipient_role", "type": "varchar", "size": 40, "required": true },
+      { "key": "channel", "type": "varchar", "size": 16, "required": true },
+      { "key": "recipient_address_ciphertext", "type": "varchar", "size": 512, "required": true, "encrypt": true },
+      { "key": "message_body", "type": "text", "required": true, "encrypt": true },
+      { "key": "status", "type": "varchar", "size": 24, "required": true },
+      { "key": "response_deadline", "type": "datetime", "required": true },
+      { "key": "sent_at", "type": "datetime", "required": false },
+      { "key": "reminder_sent_at", "type": "datetime", "required": false },
+      { "key": "responded_at", "type": "datetime", "required": false },
+      { "key": "token_hash", "type": "varchar", "size": 64, "required": false },
+      { "key": "token_expires_at", "type": "datetime", "required": false }
+    ],
+    "indexes": [
+      { "key": "by_owner_status", "type": "key", "columns": ["user_id", "status"] },
+      { "key": "by_plan", "type": "key", "columns": ["plan_id"] },
+      { "key": "token_hash_unique", "type": "unique", "columns": ["token_hash"] }
+    ]
+  },
+  {
+    "$id": "childcare_providers",
+    "$permissions": ["read(\"any\")"],
+    "databaseId": "equalpath",
+    "name": "JKM childcare providers",
+    "enabled": true,
+    "rowSecurity": false,
+    "columns": [
+      { "key": "name", "type": "varchar", "size": 240, "required": true },
+      { "key": "registration_no", "type": "varchar", "size": 100, "required": true },
+      { "key": "status", "type": "varchar", "size": 32, "required": true },
+      { "key": "category", "type": "varchar", "size": 80, "required": false },
+      { "key": "state", "type": "varchar", "size": 80, "required": true },
+      { "key": "district", "type": "varchar", "size": 120, "required": true },
+      { "key": "address", "type": "text", "required": false },
+      { "key": "lat", "type": "double", "required": false },
+      { "key": "lng", "type": "double", "required": false },
+      { "key": "source_updated_at", "type": "varchar", "size": 10, "required": true },
+      { "key": "source_url", "type": "string", "format": "url", "required": true }
+    ],
+    "indexes": [
+      { "key": "registration_unique", "type": "unique", "columns": ["registration_no"] },
+      { "key": "by_area_status", "type": "key", "columns": ["state", "district", "status"] },
+      { "key": "name_search", "type": "fulltext", "columns": ["name"] }
+    ]
+  },
+  {
+    "$id": "district_population",
+    "$permissions": ["read(\"any\")"],
+    "databaseId": "equalpath",
+    "name": "OpenDOSM district population",
+    "enabled": true,
+    "rowSecurity": false,
+    "columns": [
+      { "key": "state", "type": "varchar", "size": 80, "required": true },
+      { "key": "district", "type": "varchar", "size": 120, "required": true },
+      { "key": "age_band", "type": "varchar", "size": 16, "required": true },
+      { "key": "population", "type": "integer", "required": true, "min": 0 },
+      { "key": "year", "type": "integer", "required": true, "min": 2000, "max": 2200 },
+      { "key": "source_updated_at", "type": "varchar", "size": 10, "required": true }
+    ],
+    "indexes": [
+      { "key": "area_year_unique", "type": "unique", "columns": ["state", "district", "age_band", "year"] },
+      { "key": "by_area", "type": "key", "columns": ["state", "district"] }
+    ]
+  },
+  {
+    "$id": "strategy_library",
+    "$permissions": ["read(\"users\")"],
+    "databaseId": "equalpath",
+    "name": "Planning strategy library",
+    "enabled": true,
+    "rowSecurity": false,
+    "columns": [
+      { "key": "name", "type": "varchar", "size": 120, "required": true },
+      { "key": "resource_type", "type": "varchar", "size": 40, "required": true },
+      { "key": "constraints_json", "type": "text", "required": true },
+      { "key": "default_weight", "type": "double", "required": true },
+      { "key": "active", "type": "boolean", "required": false, "default": true }
+    ],
+    "indexes": [
+      { "key": "name_unique", "type": "unique", "columns": ["name"] },
+      { "key": "by_resource", "type": "key", "columns": ["resource_type", "active"] }
+    ]
+  }
+]

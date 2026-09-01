@@ -1,0 +1,35 @@
+name: Feature request
+description: Propose a change and explain its Iteration 1 relevance
+title: "[Feature] "
+labels: [enhancement, needs-triage]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or user need
+      description: Explain the user outcome, not only the requested implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Iteration and acceptance impact
+      description: State whether this corrects E0/E1/E2 or belongs in a later iteration.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed outcome
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Dependencies, privacy, data, and migration risks
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Supporting evidence
+      description: Link to research, screenshots, or an affected acceptance criterion without including private data.
+

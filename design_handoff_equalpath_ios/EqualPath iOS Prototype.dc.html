@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"><style>
+html,body{margin:0;padding:0}
+body{background:#05070F;font-family:'Instrument Sans',system-ui,sans-serif;color:#EFE7D6;-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;min-height:100vh}
+a{color:#E3B85C;text-decoration:none}a:hover{color:#F3D391}
+*{box-sizing:border-box}
+@keyframes goo1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(26px,-18px) scale(1.14)}66%{transform:translate(-20px,16px) scale(.9)}}
+@keyframes goo2{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(-30px,-14px) scale(.88)}70%{transform:translate(18px,22px) scale(1.16)}}
+@keyframes gooBreath{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes gooTrail{0%,100%{transform:translateX(0)}45%{transform:translateX(7px)}}
+@keyframes gooSpark{0%,100%{opacity:.4;transform:rotate(45deg) scale(.9)}50%{opacity:1;transform:rotate(45deg) scale(1.25)}}
+@keyframes sweepSpin{to{transform:rotate(360deg)}}
+</style></helmet>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="pg-goo"><feGaussianBlur in="SourceGraphic" stdDeviation="11" result="b"></feGaussianBlur><feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -10"></feColorMatrix></filter>
+<filter id="pg-goo-text"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"></feGaussianBlur><feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="g"></feColorMatrix><feBlend in="SourceGraphic" in2="g"></feBlend></filter>
+<filter id="pg-goo-tight"><feGaussianBlur in="SourceGraphic" stdDeviation="6" result="b"></feGaussianBlur><feColorMatrix in="b" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"></feColorMatrix></filter>
+</defs></svg>
+
+<div style="display:flex;gap:44px;align-items:center;padding:40px 60px">
+
+<div style="width:300px;display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;align-items:center;gap:11px"><span style="width:9px;height:9px;background:#E3B85C;transform:rotate(45deg);display:block"></span><span style="font:600 11px/1 'Instrument Sans',sans-serif;letter-spacing:.22em;color:#E3B85C">EQUALPATH · PROTOTYPE</span></div>
+<div style="font:500 34px/1.1 'Cormorant Garamond',serif;color:#F6EFDE">Walk the whole<br>first run</div>
+<div style="font:400 13.5px/1.65 'Instrument Sans',sans-serif;color:#A6AECC;text-wrap:pretty">Everything is clickable. Type the number on the keypad, add a child, flip the notification switches, watch the sweep run, and land on the gap it finds. Nothing is sent anywhere.</div>
+<div style="height:1px;background:rgba(226,214,186,.14)"></div>
+<div style="font:600 10.5px/1 'Instrument Sans',sans-serif;letter-spacing:.18em;color:#6E779C">STEP {{ stepNo }} OF 12 · {{ stepName }}</div>
+<div style="display:flex;gap:4px;filter:url(#pg-goo-tight)">{{ progressDots }}</div>
+<div style="display:flex;gap:9px;flex-wrap:wrap">
+<div onClick="{{ restart }}" style="display:flex;align-items:center;justify-content:center;height:42px;padding:0 16px;border-radius:12px;border:1px solid rgba(226,214,186,.22);font:600 13px/1 'Instrument Sans',sans-serif;color:#CBD2EA;cursor:pointer" style-hover="border-color:#E3B85C;color:#E3B85C">Start over</div>
+<div onClick="{{ back }}" style="display:flex;align-items:center;justify-content:center;height:42px;padding:0 16px;border-radius:12px;border:1px solid rgba(226,214,186,.22);font:600 13px/1 'Instrument Sans',sans-serif;color:#CBD2EA;cursor:pointer" style-hover="border-color:#E3B85C;color:#E3B85C">Back</div>
+<div onClick="{{ next }}" style="display:flex;align-items:center;justify-content:center;height:42px;padding:0 16px;border-radius:12px;border:1px solid rgba(227,184,92,.4);font:600 13px/1 'Instrument Sans',sans-serif;color:#E3B85C;cursor:pointer" style-hover="background:rgba(227,184,92,.12)">Skip ahead</div>
+</div>
+<div style="font:400 12px/1.6 'Instrument Sans',sans-serif;color:#6E779C">The liquid effect is a real SVG filter, so touching shapes merge — the step dots on the phone fuse as they fill.</div>
+</div>
+
+<div style="position:relative;width:390px;height:844px;border-radius:46px;background:#080D1E;border:1px solid rgba(227,184,92,.26);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.7);display:flex;flex-direction:column">
+{{ blobLayer }}
+<div style="position:relative;display:flex;justify-content:space-between;align-items:flex-end;height:54px;padding:0 30px 0 34px;font:600 15px/1 'Instrument Sans',sans-serif;color:#EFE7D6;flex:none;z-index:4"><span style="padding-bottom:12px">9:41</span><span style="position:absolute;left:50%;top:11px;transform:translateX(-50%);width:110px;height:32px;border-radius:18px;background:#04060F;display:block"></span><span style="display:flex;gap:5px;align-items:center;padding-bottom:12px"><span style="width:17px;height:10px;border:1px solid rgba(239,231,214,.8);border-radius:3px;display:block;position:relative"><span style="position:absolute;inset:1.5px;background:#EFE7D6;border-radius:1.5px;display:block"></span></span></span></div>
+{{ screen }}
+<div style="position:relative;flex:none;display:flex;justify-content:center;padding:8px 0 10px;z-index:4"><span style="width:134px;height:5px;border-radius:3px;background:rgba(239,231,214,.34);display:block"></span></div>
+</div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:840,&quot;height&quot;:940}}">
+const E = React.createElement;
+const STEPS = ['Welcome','Your number','The code','Your name','Your children','Care hours','Work week','Notifications','Location','Invite carers','First sweep','What it found'];
+
+const F = {
+  serif: "'Cormorant Garamond',serif",
+  sans: "'Instrument Sans',system-ui,sans-serif"
+};
+
+class Component extends DCLogic {
+  state = { step: 0, phone: '', code: '', name: '', email: '', kids: ['Nia · 4', 'Idris · 7'], notif: [true], loc: null, invited: 2, sweep: 0 };
+
+  componentDidMount() { this.tick(); }
+  componentDidUpdate(_, prev) { if (prev.step !== this.state.step) this.tick(); }
+  componentWillUnmount() { clearInterval(this._t); }
+
+  tick() {
+    clearInterval(this._t);
+    if (this.state.step !== 10) return;
+    this.setState({ sweep: 0 });
+    this._t = setInterval(() => {
+      this.setState(s => {
+        if (s.sweep >= 100) { clearInterval(this._t); return { sweep: 100 }; }
+        return { sweep: s.sweep + 2 };
+      });
+    }, 45);
+  }
+
+  go = d => this.setState(s => ({ step: Math.max(0, Math.min(STEPS.length - 1, s.step + d)) }));
+  set = (k, v) => this.setState({ [k]: v });
+
+  tapKey = d => {
+    const { step } = this.state;
+    if (step === 1) {
+      if (d === 'del') return this.setState(s => ({ phone: s.phone.slice(0, -1) }));
+      if (this.state.phone.length < 9) this.setState(s => ({ phone: s.phone + d }));
+    } else if (step === 2) {
+      if (d === 'del') return this.setState(s => ({ code: s.code.slice(0, -1) }));
+      if (this.state.code.length < 6) this.setState(s => ({ code: s.code + d }));
+    }
+  };
+
+  // ---------- shared bits ----------
+  blobs(variant) {
+    if (variant === 'none') return null;
+    const conf = {
+      big:   { box: { top: -70, left: -60, w: 470 }, op: .8 },
+      corner:{ box: { top: -230, right: -150, w: 400 }, op: .34 },
+      low:   { box: { bottom: -210, left: -110, w: 420 }, op: .32 },
+      centre:{ box: { top: -60, left: -70, w: 430 }, op: .34 }
+    }[variant] || { box: { top: -70, left: -60, w: 470 }, op: .5 };
+    const b = conf.box, w = b.w;
+    const pos = { position: 'absolute', width: w, height: w, filter: 'url(#pg-goo)', opacity: conf.op, pointerEvents: 'none', zIndex: 0 };
+    ['top', 'left', 'right', 'bottom'].forEach(k => { if (b[k] !== undefined) pos[k] = b[k]; });
+    return E('div', { style: pos },
+      E('div', { style: { position: 'absolute', top: w * .28, left: w * .22, width: w * .42, height: w * .42, borderRadius: '50%', background: '#4A6BE8', animation: 'goo1 13s ease-in-out infinite' } }),
+      E('div', { style: { position: 'absolute', top: w * .38, left: w * .45, width: w * .3, height: w * .3, borderRadius: '50%', background: '#3C55C4', animation: 'goo2 17s ease-in-out infinite' } }),
+      E('div', { style: { position: 'absolute', top: w * .2, left: w * .4, width: w * .21, height: w * .21, borderRadius: '50%', background: '#E3B85C', opacity: .78, animation: 'goo2 11s ease-in-out infinite' } })
+    );
+  }
+
+  nav(title, right) {
+    return E('div', { style: { position: 'relative', zIndex: 4, flex: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 44, padding: '0 20px' } },
+      E('span', { onClick: () => this.go(-1), style: { width: 60, font: `400 24px/1 ${F.sans}`, color: '#E3B85C', cursor: 'pointer' } }, '\u2039'),
+      E('span', { style: { font: `600 16px/1 ${F.sans}`, color: '#EFE7D6' } }, title),
+      E('span', { onClick: () => this.go(1), style: { width: 60, textAlign: 'right', font: `600 14px/1 ${F.sans}`, color: '#E3B85C', cursor: 'pointer' } }, right || '')
+    );
+  }
+
+  bar(n) {
+    return E('div', { style: { position: 'relative', zIndex: 4, flex: 'none', display: 'flex', alignItems: 'center', gap: 5, padding: '6px 20px 12px', filter: 'url(#pg-goo-tight)' } },
+      [1, 2, 3, 4, 5, 6].map(i => E('span', { key: i, style: { height: 9, borderRadius: 5, flex: 1, background: i <= n ? '#E3B85C' : '#242E58', transition: 'background .4s' } }))
+    );
+  }
+
+  body(children, pad) {
+    return E('div', { style: { position: 'relative', zIndex: 4, flex: 1, minHeight: 0, padding: pad || '4px 24px 0', display: 'flex', flexDirection: 'column', overflow: 'hidden' } }, children);
+  }
+
+  h1(html) { return E('div', { style: { font: `500 33px/1.1 ${F.serif}`, color: '#F6EFDE', marginBottom: 9 }, dangerouslySetInnerHTML: { __html: html } }); }
+  sub(t) { return E('div', { style: { font: `400 14px/1.6 ${F.sans}`, color: '#A6AECC', marginBottom: 20 } }, t); }
+
+  cta(label, onClick, sub, disabled) {
+    return E('div', { style: { marginTop: 'auto', paddingBottom: 12 } },
+      E('div', { onClick: disabled ? null : onClick, style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: 56, borderRadius: 20, background: disabled ? '#1A2350' : '#4A6BE8', boxShadow: disabled ? 'none' : '0 10px 30px rgba(74,107,232,.45)', font: `600 16px/1 ${F.sans}`, color: disabled ? '#5E6790' : '#fff', cursor: disabled ? 'default' : 'pointer', animation: disabled ? 'none' : 'gooTrail 5s ease-in-out infinite' } }, label),
+      sub ? E('div', { style: { textAlign: 'center', font: `400 11.5px/1.5 ${F.sans}`, color: '#6E779C', marginTop: 10 } }, sub) : null
+    );
+  }
+
+  note(t) {
+    return E('div', { style: { display: 'flex', gap: 10, border: '1px solid rgba(226,214,186,.14)', borderRadius: 16, background: '#0B1024', padding: '13px 15px' } },
+      E('span', { style: { width: 8, height: 8, background: '#E3B85C', transform: 'rotate(45deg)', display: 'block', marginTop: 5, flex: 'none' } }),
+      E('span', { style: { font: `400 12.5px/1.55 ${F.sans}`, color: '#9AA3C4' } }, t)
+    );
+  }
+
+  card(rows) { return E('div', { style: { border: '1px solid rgba(226,214,186,.14)', borderRadius: 20, background: '#0C1226', overflow: 'hidden' } }, rows); }
+
+  row(k, t, sub, right, last) {
+    return E('div', { key: k, style: { display: 'flex', alignItems: 'center', gap: 12, padding: '13px 16px', borderBottom: last ? 'none' : '1px solid rgba(226,214,186,.09)' } },
+      E('span', { style: { flex: 1 } },
+        E('span', { style: { display: 'block', font: `600 14.5px/1.3 ${F.sans}`, color: '#F1E9D8' } }, t),
+        sub ? E('span', { style: { display: 'block', font: `400 12.5px/1.4 ${F.sans}`, color: '#8F97BA', marginTop: 4 } }, sub) : null
+      ), right);
+  }
+
+  toggle(on, onClick) {
+    return E('span', { onClick, style: { width: 51, height: 31, borderRadius: 16, background: on ? '#2FB98A' : '#2A345E', display: 'flex', alignItems: 'center', padding: 2, justifyContent: on ? 'flex-end' : 'flex-start', flex: 'none', cursor: 'pointer', transition: 'background .25s' } },
+      E('span', { style: { width: 27, height: 27, borderRadius: '50%', background: '#fff', display: 'block', boxShadow: '0 2px 5px rgba(0,0,0,.3)' } }));
+  }
+
+  keypad() {
+    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'del'];
+    return E('div', { style: { flex: 'none', display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 9, padding: '0 6px 6px' } },
+      keys.map((k, i) => k === '' ? E('span', { key: i }) :
+        E('div', { key: i, onClick: () => this.tapKey(k), style: { height: 54, borderRadius: 16, background: '#0E1430', border: '1px solid rgba(226,214,186,.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', font: `600 21px/1 ${F.sans}`, color: k === 'del' ? '#8F97BA' : '#EFE7D6', cursor: 'pointer' } }, k === 'del' ? '\u232B' : k)));
+  }
+
+  // ---------- screens ----------
+  screen() {
+    const s = this.state;
+    switch (s.step) {
+      case 0: return E(React.Fragment, null,
+        this.body(E(React.Fragment, null,
+          E('div', { style: { height: 300 } }),
+          E('div', { style: { marginTop: 'auto', paddingBottom: 18 } },
+            E('div', { style: { font: `500 11px/1 ${F.sans}`, letterSpacing: '.24em', color: '#E3B85C', marginBottom: 13 } }, 'EQUALPATH'),
+            this.h1('Know about<br>tomorrow <em style="font-style:italic;color:#E3B85C">tonight</em>'),
+            E('div', { style: { font: `400 14.5px/1.6 ${F.sans}`, color: '#A6AECC', maxWidth: 290, marginBottom: 24 } }, 'EqualPath watches the gap between your work and your childcare, and tells you the evening before it opens.'),
+            E('div', { style: { display: 'flex', flexDirection: 'column', gap: 11 } },
+              E('div', { onClick: () => this.go(1), style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: 58, borderRadius: 20, background: '#4A6BE8', boxShadow: '0 10px 30px rgba(74,107,232,.45)', font: `600 16px/1 ${F.sans}`, color: '#fff', cursor: 'pointer', animation: 'gooTrail 4.5s ease-in-out infinite' } }, 'Create an account'),
+              E('div', { onClick: () => this.setState({ step: 1 }), style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: 54, borderRadius: 20, border: '1px solid rgba(226,214,186,.24)', font: `600 15px/1 ${F.sans}`, color: '#CBD2EA', cursor: 'pointer' } }, 'I already have one')
+            )
+          )
+        ), '0 28px 0'));
+
+      case 1: {
+        const p = s.phone.padEnd(9, '\u00b7');
+        const shown = p.slice(0, 2) + ' ' + p.slice(2, 5) + ' ' + p.slice(5);
+        return E(React.Fragment, null, this.nav('Sign in', 'Skip'), this.bar(1),
+          this.body(E(React.Fragment, null,
+            this.h1('What number should<br>we reach you on?'),
+            this.sub('We send one code now, and the evening alert later. Nothing else.'),
+            E('div', { style: { display: 'flex', gap: 10, marginBottom: 14 } },
+              E('div', { style: { display: 'flex', alignItems: 'center', gap: 7, height: 60, borderRadius: 18, border: '1px solid rgba(226,214,186,.2)', background: '#0D1330', padding: '0 15px' } }, E('span', { style: { font: `600 16px/1 ${F.sans}`, color: '#EFE7D6' } }, '+60')),
+              E('div', { style: { flex: 1, display: 'flex', alignItems: 'center', height: 60, borderRadius: 18, border: '1.5px solid #4A6BE8', background: '#101940', padding: '0 18px', boxShadow: '0 0 0 5px rgba(74,107,232,.14)' } },
+                E('span', { style: { font: `600 18px/1 ${F.sans}`, letterSpacing: '.08em', color: s.phone ? '#F6EFDE' : '#4A5480' } }, shown),
+                E('span', { style: { width: 2, height: 22, background: '#E3B85C', marginLeft: 4, display: 'block', animation: 'gooBreath 1.4s ease-in-out infinite' } }))
+            ),
+            this.note('Your number signs you in and carries alerts. Anyone you invite sees only the name you choose.'),
+            E('div', { style: { marginTop: 'auto' } },
+              this.cta(s.phone.length === 9 ? 'Send the code' : 'Enter 9 digits', () => this.go(1), null, s.phone.length !== 9)),
+            this.keypad()
+          )));
+      }
+
+      case 2: {
+        const idx = [0, 1, 2, 3, 4, 5];
+        const cells = E('div', { style: { position: 'relative', height: 64, marginBottom: 14 } },
+          E('div', { style: { position: 'absolute', inset: 0, display: 'flex', gap: 8, filter: 'url(#pg-goo-tight)' } },
+            idx.map(i => E('div', { key: i, style: { flex: 1, height: 64, borderRadius: 16, background: s.code[i] ? '#4A6BE8' : (i === s.code.length ? '#1A2350' : '#141B3E'), transition: 'background .2s' } }))),
+          E('div', { style: { position: 'absolute', inset: 0, display: 'flex', gap: 8 } },
+            idx.map(i => E('div', { key: i, style: { flex: 1, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center', font: `600 23px/1 ${F.sans}`, color: '#fff' } },
+              s.code[i] || (i === s.code.length ? E('span', { style: { width: 2, height: 22, background: '#E3B85C', display: 'block', animation: 'gooBreath 1.4s ease-in-out infinite' } }) : null)))));
+        return E(React.Fragment, null, this.nav('Verify', 'Skip'), this.bar(2),
+          this.body(E(React.Fragment, null,
+            this.h1('Enter the six digits<br>we just sent'),
+            this.sub('Sent to +60 ' + (s.phone || '12 345 6789') + '. Any six digits work here.'),
+            cells,
+            E('div', { style: { display: 'flex', justifyContent: 'space-between', font: `500 13px/1 ${F.sans}`, color: '#8F97BA', marginBottom: 16 } }, E('span', null, 'Code expires in 4:38'), E('span', { style: { color: '#6E779C' } }, 'Resend in 0:47')),
+            this.note('Next: your name, each child\u2019s care hours, your work week. Inviting carers is optional.'),
+            E('div', { style: { marginTop: 'auto' } }, this.cta(s.code.length === 6 ? 'Confirm' : 'Six digits needed', () => this.go(1), null, s.code.length !== 6)),
+            this.keypad()
+          )));
+      }
+
+      case 3: return E(React.Fragment, null, this.nav('Set up', 'Skip'), this.bar(2),
+        this.body(E(React.Fragment, null,
+          this.h1('What should carers<br>see you as?'),
+          this.sub('This name appears on every request you send. Nothing else about you is shared.'),
+          E('div', { style: { marginBottom: 13 } },
+            E('div', { style: { font: `600 10.5px/1 ${F.sans}`, letterSpacing: '.16em', color: '#6E779C', marginBottom: 7 } }, 'YOUR NAME'),
+            E('div', { style: { display: 'flex', alignItems: 'center', height: 58, borderRadius: 18, border: '1.5px solid #4A6BE8', background: '#101940', padding: '0 17px', boxShadow: '0 0 0 5px rgba(74,107,232,.14)' } },
+              E('span', { style: { font: `600 16.5px/1 ${F.sans}`, color: s.name ? '#F6EFDE' : '#5E6790' } }, s.name || 'Aina'),
+              E('span', { style: { width: 2, height: 22, background: '#E3B85C', marginLeft: 3, display: 'block', animation: 'gooBreath 1.4s ease-in-out infinite' } }))),
+          E('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 } },
+            ['Aina', 'Aina B.', 'Mama Aina'].map(n => E('span', { key: n, onClick: () => this.set('name', n), style: { font: `600 13px/1 ${F.sans}`, color: s.name === n ? '#0A0F22' : '#CBD2EA', background: s.name === n ? '#E3B85C' : 'rgba(226,214,186,.08)', borderRadius: 9, padding: '10px 13px', cursor: 'pointer' } }, n))),
+          this.note('Carers only see this name and the hours you ask about \u2014 not your number, address, or employer.'),
+          this.cta('Continue', () => this.go(1))
+        )));
+
+      case 4: return E(React.Fragment, null, this.nav('Set up', 'Skip'), this.bar(3),
+        this.body(E(React.Fragment, null,
+          this.h1('Who are we<br>watching over?'),
+          this.sub('Add each child once. Their hours are set on the next screen.'),
+          this.card(s.kids.map((k, i) => this.row(k, k.split(' \u00b7 ')[0], k.split(' \u00b7 ')[1] + ' years old',
+            E('span', { onClick: () => this.setState({ kids: s.kids.filter((_, j) => j !== i) }), style: { font: `600 13px/1 ${F.sans}`, color: '#FF7A8C', cursor: 'pointer' } }, 'Remove'), i === s.kids.length - 1))),
+          E('div', { onClick: () => this.setState({ kids: s.kids.concat(['Nadia \u00b7 2']) }), style: { display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 9, height: 54, borderRadius: 18, border: '1px dashed rgba(227,184,92,.4)', margin: '13px 0 16px', cursor: 'pointer' } },
+            E('span', { style: { width: 9, height: 9, background: '#E3B85C', transform: 'rotate(45deg)', display: 'block' } }),
+            E('span', { style: { font: `600 14.5px/1 ${F.sans}`, color: '#E3B85C' } }, 'Add another child')),
+          this.note('Each child gets their own coverage ring. A gap for one is never reported as a gap for both.'),
+          this.cta(s.kids.length ? 'Continue' : 'Add at least one child', () => this.go(1), null, !s.kids.length)
+        )));
+
+      case 5: return E(React.Fragment, null, this.nav('Aina', 'Idris \u203a'), this.bar(4),
+        this.body(E(React.Fragment, null,
+          this.h1('When is Nia<br>already covered?'),
+          this.sub('Your provider, school, or a standing arrangement. Weekends left blank.'),
+          this.card([
+            this.row('p', 'TASKA Seri Kasih', 'JKM-registered \u00b7 2.3 km', E('span', { style: { font: `600 13px/1 ${F.sans}`, color: '#E3B85C' } }, 'Change')),
+            this.row('d', 'Mon \u2013 Fri', '08:00 \u2013 16:00', E('span', { style: { font: `600 13px/1 ${F.sans}`, color: '#E3B85C' } }, 'Edit')),
+            this.row('c', 'Collection by', 'You, unless arranged', E('span', { style: { font: `600 13px/1 ${F.sans}`, color: '#E3B85C' } }, 'Edit'), true)
+          ]),
+          E('div', { style: { margin: '16px 0 14px' } },
+            E('div', { style: { font: `600 10.5px/1 ${F.sans}`, letterSpacing: '.16em', color: '#6E779C', marginBottom: 10 } }, 'HOW THAT WEEK LOOKS'),
+            E('div', { style: { display: 'flex', gap: 5, height: 70 } },
+              ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => E('div', { key: i, style: { flex: 1, display: 'flex', flexDirection: 'column', gap: 5 } },
+                E('span', { style: { font: `600 10.5px/1 ${F.sans}`, color: i > 4 ? '#5E6790' : '#6E779C', textAlign: 'center' } }, d),
+                E('span', { style: { flex: 1, borderRadius: 7, background: i > 4 ? '#0D1430' : 'rgba(47,185,138,.45)', display: 'block' } }))))),
+          this.note('If the provider closes on a public holiday we treat that day as uncovered, not unknown.'),
+          this.cta('Save and continue', () => this.go(1))
+        )));
+
+      case 6: return E(React.Fragment, null, this.nav('Set up', 'Skip'), this.bar(4),
+        this.body(E(React.Fragment, null,
+          this.h1('When are you<br>at work?'),
+          this.sub('Set the ordinary week. Single days get edited later without touching this.'),
+          this.card([
+            this.row('a', 'Mon \u2013 Thu', '09:00 \u2013 17:30 \u00b7 in office', E('span', { style: { font: `600 13px/1 ${F.sans}`, color: '#E3B85C' } }, 'Edit')),
+            this.row('b', 'Friday', '09:00 \u2013 15:00 \u00b7 from home', E('span', { style: { font: `600 13px/1 ${F.sans}`, color: '#E3B85C' } }, 'Edit')),
+            this.row('c', 'Travel to work', '30 minutes each way', E('span', { style: { font: `600 13px/1 ${F.sans}`, color: '#E3B85C' } }, 'Edit'), true)
+          ]),
+          E('div', { style: { margin: '14px 0' } }, this.card([this.row('cal', 'Import from my calendar', 'Read-only. Nothing is written back.', this.toggle(true, null), true)])),
+          this.note('Travel time is counted on both ends. Without it, a 16:00 collection after a 15:30 finish would look possible.'),
+          this.cta('Continue', () => this.go(1))
+        )));
+
+      case 7: {
+        const labels = [['Evening gap alert', 'Stored on this iPhone · 21:00']];
+        return E(React.Fragment, null, this.nav('Set up', ''), this.bar(5),
+          this.body(E(React.Fragment, null,
+            this.h1('The evening alert<br>is the product'),
+            this.sub('Scheduled on this iPhone at 21:00, and only when something needs you.'),
+            this.card(labels.map((l, i) => this.row(i, l[0], l[1], this.toggle(s.notif[i], () => {
+              const n = s.notif.slice(); n[i] = !n[i]; this.set('notif', n);
+            }), i === labels.length - 1))),
+            E('div', { style: { marginTop: 14, borderRadius: 22, background: '#F2EFE8', padding: '17px 18px 14px', boxShadow: '0 12px 40px rgba(0,0,0,.5)' } },
+              E('div', { style: { font: `600 15.5px/1.3 ${F.sans}`, color: '#12141C', marginBottom: 6 } }, '\u201cEqualPath\u201d would like to send you notifications'),
+              E('div', { style: { font: `400 13px/1.5 ${F.sans}`, color: '#4A4E5C', marginBottom: 13 } }, 'Alerts may include sounds and badges. You can change this in Settings.'),
+              E('div', { style: { display: 'flex', gap: 10 } },
+                E('div', { onClick: () => { this.set('notif', [false]); this.go(1); }, style: { flex: 1, textAlign: 'center', padding: '11px 0', borderRadius: 12, background: '#DDD9D0', font: `600 14px/1 ${F.sans}`, color: '#12141C', cursor: 'pointer' } }, 'Don\u2019t Allow'),
+                E('div', { onClick: () => this.go(1), style: { flex: 1, textAlign: 'center', padding: '11px 0', borderRadius: 12, background: '#4A6BE8', font: `600 14px/1 ${F.sans}`, color: '#fff', cursor: 'pointer' } }, 'Allow'))),
+            E('div', { style: { marginTop: 'auto', paddingBottom: 12, textAlign: 'center', font: `400 12px/1.5 ${F.sans}`, color: '#6E779C' } }, 'Decline and the app still works \u2014 you check it yourself.')
+          )));
+      }
+
+      case 8: return E(React.Fragment, null, this.nav('Set up', 'Skip'), this.bar(5),
+        this.body(E(React.Fragment, null,
+          this.h1('Only to measure<br>travel time'),
+          this.sub('EqualPath uses your home and work areas to judge whether a collection is physically possible.'),
+          this.card([
+            this.row('h', 'Home area', 'Ampang \u00b7 set manually', E('span', { style: { font: `600 13px/1 ${F.sans}`, color: '#E3B85C' } }, 'Change')),
+            this.row('w', 'Work area', 'KL Sentral \u00b7 set manually', E('span', { style: { font: `600 13px/1 ${F.sans}`, color: '#E3B85C' } }, 'Change'), true)
+          ]),
+          E('div', { style: { marginTop: 14 } }, this.note('Areas, not addresses. No live tracking, ever. You can type both by hand and never grant location access.')),
+          E('div', { style: { marginTop: 15, display: 'flex', flexDirection: 'column', gap: 10 } },
+            ['Use my location once', 'I\u2019ll keep typing them'].map((t, i) => E('div', { key: i, onClick: () => { this.set('loc', i === 0 ? 'granted' : 'manual'); this.go(1); }, style: { display: 'flex', alignItems: 'center', justifyContent: 'center', height: 52, borderRadius: 18, border: i === 0 ? '1px solid rgba(226,214,186,.24)' : '1px solid rgba(226,214,186,.14)', font: `600 15px/1 ${F.sans}`, color: i === 0 ? '#CBD2EA' : '#8F97BA', cursor: 'pointer' } }, t))),
+          E('div', { style: { marginTop: 'auto', paddingBottom: 12 } })
+        )));
+
+      case 9: return E(React.Fragment, null, this.nav('Set up', 'Skip'), this.bar(6),
+        this.body(E(React.Fragment, null,
+          this.h1('Who could you<br>ask for help?'),
+          this.sub('Adding someone does not notify them. Requests are always sent one at a time, by you.'),
+          this.card([
+            this.row('p', 'Partner \u00b7 Farid', 'farid@example.com', E('span', { style: { font: `600 12px/1 ${F.sans}`, color: '#3FD09B' } }, 'Added')),
+            this.row('m', 'Mother', 'mother@example.com', E('span', { style: { font: `600 12px/1 ${F.sans}`, color: '#3FD09B' } }, 'Added')),
+            this.row('s', 'Neighbour \u00b7 Siti', s.invited > 2 ? 'siti@example.com' : 'No email yet',
+              E('span', { onClick: () => this.set('invited', s.invited > 2 ? 2 : 3), style: { font: `600 12px/1 ${F.sans}`, color: s.invited > 2 ? '#3FD09B' : '#E3B85C', cursor: 'pointer' } }, s.invited > 2 ? 'Added' : 'Add one'), true)
+          ]),
+          E('div', { style: { margin: '13px 0 16px' } }, this.note('Skip this and the app still finds your gaps. It just cannot suggest anyone to fill them.')),
+          this.cta('Finish setup', () => this.go(1), 'You can add or remove carers at any time.')
+        )));
+
+      case 10: {
+        const p = s.sweep;
+        const rows = [['Provider hours checked against the JKM register', 25], ['Work week and travel time applied', 50], ['Looking for days with no adult present', 80], ['Building the evening alert', 100]];
+        return E(React.Fragment, null,
+          E('div', { style: { position: 'relative', zIndex: 4, flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', padding: '0 32px', overflow: 'hidden' } },
+            E('div', { style: { height: 250, flex: 'none' } }),
+            E('div', { style: { font: `500 11px/1 ${F.sans}`, letterSpacing: '.24em', color: '#E3B85C', marginBottom: 13 } }, 'SETTING UP'),
+            E('div', { style: { font: `500 33px/1.12 ${F.serif}`, color: '#F6EFDE', marginBottom: 11 } }, 'Reading the next', E('br'), 'fourteen days'),
+            E('div', { style: { font: `400 14px/1.6 ${F.sans}`, color: '#A6AECC', marginBottom: 22 } }, 'Comparing ' + s.kids.length + ' children\u2019s care hours against your work week, day by day.'),
+            E('div', { style: { display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 20 } },
+              rows.map((r, i) => {
+                const done = p >= r[1], active = !done && (i === 0 || p >= rows[i - 1][1]);
+                return E('div', { key: i, style: { display: 'flex', alignItems: 'center', gap: 11 } },
+                  E('span', { style: { width: 9, height: 9, background: done ? '#2FB98A' : (active ? '#E3B85C' : 'transparent'), border: done || active ? 'none' : '1px solid #4A5480', transform: 'rotate(45deg)', display: 'block', flex: 'none', animation: active ? 'gooSpark 2.2s ease-in-out infinite' : 'none' } }),
+                  E('span', { style: { font: `500 13.5px/1.35 ${F.sans}`, color: done ? '#CBD2EA' : (active ? '#EFE7D6' : '#6E779C') } }, r[0]));
+              })),
+            E('div', { style: { height: 8, borderRadius: 4, background: '#171F44', overflow: 'hidden', marginBottom: 10 } },
+              E('div', { style: { width: p + '%', height: '100%', background: '#E3B85C', transition: 'width .25s' } })),
+            E('div', { style: { font: `400 12px/1 ${F.sans}`, color: '#6E779C' } }, p < 100 ? p + '% \u00b7 this runs again every evening' : 'Sweep complete'),
+            E('div', { style: { marginTop: 'auto', paddingBottom: 12 } },
+              p >= 100 ? this.cta('See what it found', () => this.go(1)) : null)
+          ));
+      }
+
+      default: return E(React.Fragment, null,
+        E('div', { style: { position: 'absolute', inset: 0, backgroundImage: 'radial-gradient(420px 300px at 50% 14%,rgba(255,107,129,.2),transparent 70%)', pointerEvents: 'none', zIndex: 1 } }),
+        this.body(E(React.Fragment, null,
+          E('div', { style: { marginTop: 18, display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 } },
+            E('span', { style: { width: 9, height: 9, background: '#FF6B81', transform: 'rotate(45deg)', display: 'block' } }),
+            E('span', { style: { font: `600 10.5px/1 ${F.sans}`, letterSpacing: '.16em', color: '#FF7A8C' } }, 'FIRST SWEEP \u00b7 1 OF 14 DAYS NEEDS YOU')),
+          E('div', { style: { font: `500 34px/1.1 ${F.serif}`, color: '#F6EFDE', marginBottom: 10 } }, 'Setup found one', E('br'), 'problem already'),
+          E('div', { style: { font: `400 14px/1.6 ${F.sans}`, color: '#A6AECC', marginBottom: 20 } }, 'Thursday 21 August. Nia\u2019s provider is closed and your work day is fixed. Idris is unaffected.'),
+          E('div', { style: { border: '1px solid rgba(255,107,129,.34)', background: 'rgba(255,107,129,.07)', borderRadius: 20, padding: '17px 18px', marginBottom: 13 } },
+            E('div', { style: { display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 11 } },
+              E('span', { style: { font: `500 24px/1 ${F.serif}`, color: '#F6EFDE' } }, 'Thursday 21 Aug'),
+              E('span', { style: { font: `600 13px/1 ${F.sans}`, color: '#FF7A8C' } }, '9h uncovered')),
+            E('div', { style: { height: 10, borderRadius: 5, overflow: 'hidden', display: 'flex', marginBottom: 11 } },
+              E('div', { style: { width: '64%', background: 'repeating-linear-gradient(45deg,#FF6B81 0 6px,#D9576D 6px 12px)' } }),
+              E('div', { style: { width: '36%', background: '#2FB98A' } })),
+            E('div', { style: { font: `400 12.5px/1.55 ${F.sans}`, color: '#CBD2EA' } }, 'TASKA Seri Kasih closed all day \u00b7 your client review at 10:00 is fixed \u00b7 travel 30 min each way')),
+          this.card([this.row('ok', 'The other 13 days', 'Covered, nothing needed', E('span', { style: { width: 9, height: 9, background: '#2FB98A', transform: 'rotate(45deg)', display: 'block' } }), true)]),
+          this.cta('See ways to cover it', () => this.set('step', 0), 'You will get this as an alert at 21:00 from tomorrow on.')
+        )));
+    }
+  }
+
+  renderVals() {
+    const s = this.state;
+    const variant = ['big', 'corner', 'corner', 'low', 'corner', 'none', 'none', 'none', 'low', 'corner', 'centre', 'none'][s.step] || 'none';
+    return {
+      stepNo: s.step + 1,
+      stepName: STEPS[s.step],
+      progressDots: STEPS.map((_, i) => E('span', { key: i, style: { height: 8, borderRadius: 4, flex: i <= s.step ? 1.6 : 1, background: i <= s.step ? '#E3B85C' : '#242E58', display: 'block', transition: 'all .3s' } })),
+      blobLayer: this.blobs(variant),
+      screen: this.screen(),
+      next: () => this.go(1),
+      back: () => this.go(-1),
+      restart: () => this.setState({ step: 0, phone: '', code: '', name: '', sweep: 0 })
+    };
+  }
+}
+
+</script>
+</body>
+</html>

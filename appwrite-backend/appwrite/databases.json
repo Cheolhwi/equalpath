@@ -1,0 +1,11 @@
+[
+  {
+    "$id": "equalpath",
+    "name": "EqualPath",
+    "enabled": true,
+    "specification": "serverless",
+    "replicas": 0,
+    "syncMode": "async"
+  }
+]
+

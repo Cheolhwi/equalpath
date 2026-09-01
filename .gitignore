@@ -1,0 +1,13 @@
+.DS_Store
+**/.DS_Store
+**/node_modules/
+**/.build/
+**/DerivedData/
+**/xcuserdata/
+**/*.xcuserstate
+**/.env
+**/.appwrite/
+**/coverage/
+tmp/
+*.xcresult
+

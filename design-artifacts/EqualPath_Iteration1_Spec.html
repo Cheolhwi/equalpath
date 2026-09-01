@@ -1,0 +1,742 @@
+<title>EqualPath Iteration 1 规格</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#FAFAFD; --surface:#FFFFFF; --raised:#F3F4FA; --sunken:#EFF0F8;
+  --ink:#141A2E; --ink-2:#545B7A; --ink-3:#878DA8;
+  --rule:#E4E6F1; --rule-strong:#CFD3E6;
+  --indigo:#4F46E5; --indigo-soft:#EDECFD; --on-indigo:#FFFFFF;
+  --green:#0E9F6E;  --green-soft:#E4F5EE;
+  --red:#D6455A;    --red-soft:#FCEAED;
+  --amber:#C2660A;  --amber-soft:#FBF0E3;
+  --teal:#0E7490;   --teal-soft:#E3F1F5;
+  --shadow:0 1px 2px rgba(20,26,46,.05), 0 8px 24px -16px rgba(20,26,46,.22);
+  --sans:"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --serif:"Fraunces","Iowan Old Style",Georgia,serif;
+  --mono:"IBM Plex Mono","SF Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0A0D1A; --surface:#121829; --raised:#1A2138; --sunken:#161C30;
+    --ink:#E8EAF4; --ink-2:#A2A9C6; --ink-3:#737A9B;
+    --rule:#262E4C; --rule-strong:#333C61;
+    --indigo:#9189FF; --indigo-soft:#211F49; --on-indigo:#0A0D1A;
+    --green:#35C795;  --green-soft:#0E2C25;
+    --red:#F2758B;    --red-soft:#33161F;
+    --amber:#E3902F;  --amber-soft:#2E2010;
+    --teal:#46AEC8;   --teal-soft:#0D2830;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0A0D1A; --surface:#121829; --raised:#1A2138; --sunken:#161C30;
+  --ink:#E8EAF4; --ink-2:#A2A9C6; --ink-3:#737A9B;
+  --rule:#262E4C; --rule-strong:#333C61;
+  --indigo:#9189FF; --indigo-soft:#211F49; --on-indigo:#0A0D1A;
+  --green:#35C795;  --green-soft:#0E2C25;
+  --red:#F2758B;    --red-soft:#33161F;
+  --amber:#E3902F;  --amber-soft:#2E2010;
+  --teal:#46AEC8;   --teal-soft:#0D2830;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto};*{transition:none!important}}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--indigo);outline-offset:3px;border-radius:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+@media(max-width:640px){.wrap{padding:0 18px}}
+
+.mast{padding:60px 0 36px;border-bottom:1px solid var(--rule)}
+.mark{display:flex;align-items:baseline;gap:12px;margin-bottom:30px;flex-wrap:wrap}
+.mark b{font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:-.01em}
+.mark span{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5vw,54px);line-height:1.08;letter-spacing:-.025em;margin:0 0 18px;text-wrap:balance}
+h1 em{font-style:italic;font-weight:500;color:var(--indigo)}
+.lede{font-size:17px;line-height:1.6;color:var(--ink-2);max-width:62ch;margin:0 0 30px}
+.lede strong{color:var(--ink);font-weight:600}
+.counts{display:flex;flex-wrap:wrap;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--surface)}
+.count{flex:1 1 130px;padding:15px 17px;border-right:1px solid var(--rule)}
+.count:last-child{border-right:0}
+.count b{display:block;font-family:var(--mono);font-size:24px;font-weight:500;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.count i{font-style:normal;font-size:14px;color:var(--ink-3)}
+.count span{display:block;font-size:12px;color:var(--ink-3);margin-top:4px}
+@media(max-width:760px){.count{flex:1 1 33%;border-bottom:1px solid var(--rule)}}
+
+nav.toc{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--ground) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.toc-in{display:flex;gap:2px;overflow-x:auto;padding:9px 0}
+.toc a{flex:none;font-family:var(--mono);font-size:11.5px;text-decoration:none;color:var(--ink-2);padding:5px 11px;border-radius:6px;white-space:nowrap}
+.toc a:hover{background:var(--raised);color:var(--ink)}
+
+section{padding:58px 0;border-bottom:1px solid var(--rule);scroll-margin-top:54px}
+section:last-of-type{border-bottom:0}
+.head{margin-bottom:28px;max-width:66ch}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--indigo);margin:0 0 10px}
+h2{font-size:26px;font-weight:600;letter-spacing:-.015em;line-height:1.25;margin:0 0 4px;text-wrap:balance}
+.kicker{font-family:var(--serif);font-style:italic;font-weight:500;font-size:17px;color:var(--ink-3);margin:0 0 14px}
+.head p{margin:0;color:var(--ink-2);font-size:15px}
+h3.sub{font-size:17px;font-weight:600;letter-spacing:-.01em;margin:32px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--rule)}
+h3.sub:first-of-type{margin-top:0}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);font-weight:500;padding:11px 14px;border-bottom:1px solid var(--rule-strong);white-space:nowrap}
+td{padding:11px 14px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:0}
+td code,.mono{font-family:var(--mono);font-size:12.5px}
+td b{font-weight:600}
+.dim{color:var(--ink-3)}
+tr.new td{background:var(--green-soft)}
+tr.chg td{background:var(--amber-soft)}
+
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:880px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{border:1px solid var(--rule);border-radius:10px;background:var(--surface);padding:15px 16px}
+.card h4{margin:0 0 6px;font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+.card p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.55}
+.card .tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:7px}
+.card ul{margin:8px 0 0;padding-left:17px;display:grid;gap:3px}
+.card li{font-size:12.8px;color:var(--ink-2);line-height:1.5}
+.card.edge{border-left:3px solid var(--rule-strong)}
+.card.edge.red{border-left-color:var(--red)}
+.card.edge.green{border-left-color:var(--green)}
+.card.edge.indigo{border-left-color:var(--indigo)}
+.card.edge.amber{border-left-color:var(--amber)}
+.card.edge.teal{border-left-color:var(--teal)}
+
+.callout{border:1px solid var(--rule);border-left:3px solid var(--indigo);border-radius:0 10px 10px 0;background:var(--surface);padding:15px 18px;margin:18px 0 0}
+.callout p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.6}
+.callout p+p{margin-top:8px}
+.callout b{color:var(--ink);font-weight:600}
+.callout.warn{border-left-color:var(--amber)}
+.callout.stop{border-left-color:var(--red)}
+.callout.ok{border-left-color:var(--green)}
+
+.algo{background:var(--sunken);border:1px solid var(--rule);border-radius:9px;padding:14px 16px;overflow-x:auto;margin:12px 0 0}
+.algo pre{margin:0;font-family:var(--mono);font-size:12.5px;line-height:1.65;color:var(--ink)}
+.algo .c{color:var(--ink-3)}
+.algo .k{color:var(--indigo);font-weight:500}
+.algo-t{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:0 0 9px}
+
+.fr{display:grid;gap:0;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--surface)}
+.fr-row{display:grid;grid-template-columns:76px 1fr auto;gap:14px;padding:11px 16px;border-bottom:1px solid var(--rule);align-items:baseline}
+.fr-row:last-child{border-bottom:0}
+.fr-row .id{font-family:var(--mono);font-size:12px;color:var(--indigo);font-weight:500}
+.fr-row .t{font-size:13.8px;line-height:1.55;color:var(--ink-2)}
+.fr-row .t b{color:var(--ink);font-weight:600}
+.fr-row .s{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;white-space:nowrap;padding-top:2px}
+.fr-grp{padding:9px 16px;background:var(--raised);border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.s.new{color:var(--green)} .s.chg{color:var(--amber)} .s.same{color:var(--ink-3)}
+
+.badge{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;padding:1.5px 7px;border-radius:4px;vertical-align:1px}
+.badge.new{background:var(--green-soft);color:var(--green)}
+.badge.chg{background:var(--amber-soft);color:var(--amber)}
+
+details.ep{border:1px solid var(--rule);border-radius:11px;background:var(--surface);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow)}
+details.ep>summary{list-style:none;cursor:pointer;padding:15px 18px;display:flex;gap:13px;align-items:center;flex-wrap:wrap}
+details.ep>summary::-webkit-details-marker{display:none}
+details.ep>summary:hover{background:var(--raised)}
+.eid{font-family:var(--mono);font-weight:500;font-size:12.5px;padding:4px 9px;border-radius:6px;background:var(--indigo-soft);color:var(--indigo)}
+details.ep>summary h4{margin:0;font-size:16px;font-weight:600;letter-spacing:-.01em;flex:1;min-width:200px}
+details.ep>summary .cnt{font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+.ac-list{padding:2px 18px 16px;background:var(--sunken)}
+.usrow{padding:12px 0 4px;font-size:14px;font-weight:600;border-top:1px solid var(--rule)}
+.usrow .sid{font-family:var(--mono);font-size:12px;color:var(--indigo);font-weight:500;margin-right:9px}
+.ac{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:8px 0;border-top:1px dashed var(--rule)}
+.ac code{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);white-space:nowrap;padding-top:2px}
+.ac .t{font-size:13.5px;line-height:1.55}
+.ac .t b{font-weight:600}
+.ac .t em{font-style:normal;color:var(--ink-2);display:block;font-size:13px;margin-top:1px}
+.dod{padding:14px 18px 17px;border-top:1px solid var(--rule);background:var(--surface)}
+.dod h5{margin:0 0 8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+.dod ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.dod li{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+
+.st{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11.5px;font-weight:500;white-space:nowrap}
+.st::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+.st.done{color:var(--green)} .st.todo{color:var(--amber)} .st.gap{color:var(--red)} .st.later{color:var(--ink-3)}
+
+.ctl{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+button.b{font-family:var(--mono);font-size:11.5px;padding:6px 13px;border-radius:7px;border:1px solid var(--rule-strong);background:var(--surface);color:var(--ink-2);cursor:pointer}
+button.b:hover{background:var(--raised);color:var(--ink);border-color:var(--indigo)}
+.ctl .hint{font-size:12.5px;color:var(--ink-3)}
+footer{padding:40px 0 60px;color:var(--ink-3);font-size:12.5px;line-height:1.7}
+footer b{color:var(--ink-2);font-weight:500}
+</style>
+
+<div class="wrap">
+<header class="mast">
+  <div class="mark"><b>EqualPath</b><span>Iteration 1 · Must have · rev E · 30 Aug 2026 · Claude Design</span></div>
+  <h1>Iteration 1 建造规格<br><em>rev E</em> — Google 登录与本地通知定稿</h1>
+  <p class="lede">界面由 <strong>Claude Design 交付稿</strong>指定：<code>design_handoff_equalpath_ios/</code>，<strong>41 屏 · 390×844 · 深色</strong>，Cormorant Garamond + Instrument Sans。Iteration 1 的唯一登录方式定稿为 <strong>Appwrite Google OAuth</strong>；告警定稿为 <strong>iPhone 本地通知</strong>，每次前台同步后重建未来 14 天提醒。APNs、设备 token 与云端投递明确延期到取得 Apple Developer 账户后的后续迭代。周重复模式、14 天规划和双向交接计算保留在本迭代。</p>
+  <div class="counts">
+    <div class="count"><b>3 <i>← 2</i></b><span>Epic</span></div>
+    <div class="count"><b>10 <i>← 7</i></b><span>User Story</span></div>
+    <div class="count"><b>31 <i>← 23</i></b><span>验收条件 AC</span></div>
+    <div class="count"><b>7 + 1</b><span>集合（owner + 只读）</span></div>
+    <div class="count"><b>24</b><span>屏（共 41）</span></div>
+    <div class="count"><b>14</b><span>天规划视野</span></div>
+  </div>
+</header>
+</div>
+
+<nav class="toc"><div class="wrap"><div class="toc-in">
+  <a href="#delta">改了什么</a><a href="#features">Feature 清单</a><a href="#data">数据模型</a>
+  <a href="#algo">算法规格</a><a href="#screens">屏幕</a><a href="#fr">功能需求</a>
+  <a href="#nfr">非功能需求</a><a href="#ac">验收条件</a><a href="#test">测试矩阵</a><a href="#out">不在范围</a>
+</div></div></nav>
+
+<div class="wrap">
+
+<!-- ═══════ DELTA ═══════ -->
+<section id="delta">
+  <div class="head">
+    <p class="eyebrow">00 / 变更摘要</p>
+    <h2>四处改动，前后对比</h2>
+    <p class="kicker">All four land inside Iteration 1; all four change the data model</p>
+    <p>先改这四处再动 Iteration 2 —— 后面每个 epic 都从这个数据模型读。</p>
+  </div>
+
+  <div class="grid g2">
+    <div class="card edge amber">
+      <span class="tag">改动 4 · 对齐 Claude Design 交付稿</span>
+      <h4>41 屏成为界面的唯一真相</h4>
+      <p><b>之前：</b>界面靠 <code>design asset/hifi_prototype.svg</code> 的六屏浅色原型（375×812）加文档里的一张 token 表。</p>
+      <p style="margin-top:8px"><b>之后：</b><code>design_handoff_equalpath_ios/</code> 的 41 屏（390×844，深色）是规范。旧六屏原型与 wireframe 已移入 <code>design asset/_superseded_20260828/</code>；文档只保留<b>图表用的浅色调色板</b>，app token 一律去交付稿里读。</p>
+      <ul>
+        <li><b>登录定稿</b> —— 只使用 Appwrite Google OAuth；不提供密码、邮件验证码或 Apple 登录</li>
+        <li><b>新增 <code>sweeps</code> 表</b> —— C7「扫描失败」要求按数据源分别记录成败</li>
+        <li><b>覆盖 band 要存 <code>source_records</code></b> —— 界面必须打印缺口的三个来源，不能渲染时现算</li>
+      </ul>
+    </div>
+    <div class="card edge indigo">
+      <span class="tag">改动 3 · 原生 iOS + Google OAuth</span>
+      <h4>SwiftUI，通过 Google 账户授权进入</h4>
+      <p><b>之前：</b>React 单页应用，Appwrite Auth 邮箱密码 + SameSite cookie 会话。架构评审写着「邮件必须是主渠道，因为 iOS Safari 普通标签页没有 Push API」。</p>
+      <p style="margin-top:8px"><b>之后：</b>SwiftUI（iOS 17+）+ Appwrite Swift SDK；点击按钮直接进入 <b>Google OAuth 授权</b>，授权成功后建立 Appwrite 会话并按 Appwrite user id 建立唯一档案。产品不收集或存储 Google 密码。告警由 iOS 本地通知承担。</p>
+      <ul>
+        <li><b>本迭代不建：</b><code>device_tokens</code> 表、<code>register-device</code> 函数或 APNs provider</li>
+        <li><b>本地通知：</b>成功同步后取消陈旧请求并重建未来 14 天提醒</li>
+        <li><b>上架风险：</b>Google 第三方登录涉及指南 4.8；Sign in with Apple 留作上架前评估项</li>
+      </ul>
+    </div>
+    <div class="card edge green">
+      <span class="tag">改动 1 · Recurrence</span>
+      <h4>周重复模式 + 物化成真实记录</h4>
+      <p><b>之前：</b>每条 <code>work_commitments</code> / <code>care_commitments</code> 都是 <code>date + start_time + end_time</code>。没有重复规则、没有模板、没有导入。她每周手输约 15 条。</p>
+      <p style="margin-top:8px"><b>之后：</b>新增 <code>schedule_patterns</code> 集合存"周一到周五 09:00–18:00"这类规则；一个 <code>materialise-schedule</code> 函数把规则展开成<b>滚动 14 天</b>内的真实占位记录。检测逻辑完全不变 —— 它仍然只读带日期的记录。</p>
+      <ul>
+        <li><b>解掉的三件事：</b>① 录入成本从每周 15 条降到一次性设定 ② R1.2 的 14 天扫描终于有东西可扫 ③ E8 的重复检测从统计考古降级成读一个字段</li>
+      </ul>
+    </div>
+    <div class="card edge green">
+      <span class="tag">改动 2 · Handover</span>
+      <h4>覆盖结束于孩子被接走的那一刻</h4>
+      <p><b>之前：</b>「工作 18:00 结束、TASKA 18:00 关门 → 已覆盖」。<code>pickup</code>、<code>drop-off</code>、<code>commute</code> 在整份 epics 文档里出现 0 次。</p>
+      <p style="margin-top:8px"><b>之后：</b>覆盖记录带 <code>collect_by</code>（提供者允许的最晚接走时间）与 <code>handover_out_ref</code>（谁去接）；用户档案带三个手填的通勤分钟数。系统算出接送人的实际到达时间，把差额作为一段<b>交接缺口</b>喂给现有的区间规则。</p>
+      <ul>
+        <li><b>AC 2.1.1 的区间规则一个字都不用改</b> —— 交接缺口只是又一段"未覆盖照护时间"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <p><b>顺带修掉的一个矛盾：</b>架构评审 R1.2 要求每天扫描未来 14 天，但原 AC 1.1.3 拒绝任何落在"展示的规划周"之外的日期 —— 14 天外根本没有数据。改动 1 落地后，规划视野统一改为<b>滚动 14 天</b>，AC 1.1.3 的措辞随之更新。这条在 rev B 里已经改掉。</p>
+  </div>
+  <div class="callout stop">
+    <p><b>这一版没有动的一件事：</b>架构评审的问题 A（<code>plans.conflict_ref</code> 指向不存在的 <code>conflicts</code> 集合）。物化冲突是一个独立决定，你还没拍板，所以到 rev C 为止都没有替你加。它仍然是 ERD 上的一个悬空引用。</p>
+    <p><b>一条已知并接受的合规风险：</b>App Store 审核指南 4.8 规定，用了 Google 这类第三方登录就必须再提供一个满足三条的等价登录方式，其中一条是<b>允许用户在注册时隐藏真实邮箱</b>。邮箱密码满足另外两条但不满足这条，能确定满足的是 Sign in with Apple。<b>上架前必须补</b>；内部 TestFlight 不走完整审核，Iteration 1 的 demo 不受影响。已写进 Security Plan 风险表第 16 行。</p>
+  </div>
+</section>
+
+<!-- ═══════ FEATURES ═══════ -->
+<section id="features">
+  <div class="head">
+    <p class="eyebrow">01 / Feature 清单</p>
+    <h2>18 个可独立排期的 feature</h2>
+    <p class="kicker">Sized to drop straight into LeanKit</p>
+    <p>编号 <code>F0.x</code> = Epic 0，<code>F1.x</code> = Epic 1，<code>F2.x</code> = Epic 2，<code>FX.x</code> = 共用地基。</p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>ID</th><th>Feature</th><th>它做什么</th><th>依赖</th><th>状态</th></tr></thead>
+      <tbody>
+        <tr class="new"><td><code>F0.1</code></td><td>Google 登录</td><td>Appwrite <code>createOAuth2Session</code> → <code>ASWebAuthenticationSession</code>；PKCE + state 校验；首次登录按 provider subject 建唯一档案</td><td>—</td><td><span class="badge new">新</span></td></tr>
+        <tr class="new"><td><code>F0.2</code></td><td>Google 授权失败与取消</td><td>取消、断网或 provider 错误不建立本地登录状态；返回欢迎页并提供可重试的人话说明</td><td>F0.1</td><td><span class="badge new">新</span></td></tr>
+        <tr class="new"><td><code>F0.3</code></td><td>会话、登出与删号</td><td>复用 Appwrite 有效会话；登出清本机会话与本地提醒；删号清空全部自有记录</td><td>F0.1 F0.2</td><td><span class="badge new">新</span></td></tr>
+        <tr class="new"><td><code>F2.6</code></td><td>iPhone 本地提醒</td><td>成功同步后重建未来 14 天提醒；权限被拒时 app 内结果仍可读，不声称云端已投递</td><td>F0.3 F2.5</td><td><span class="badge new">新</span></td></tr>
+        <tr><td><code>FX.1</code></td><td>账号与档案设定</td><td>家庭/工作地点（粗精度）；<b>三个通勤分钟数</b>；孩子档案（0–4 年龄段、每日所需照护窗口）</td><td>F0.1 F0.2</td><td><span class="badge chg">改</span></td></tr>
+        <tr class="new"><td><code>FX.2</code></td><td>重复模式编辑器</td><td>建立"周一到周五 09:00–18:00"这类规则，适用于工作、所需照护、照护覆盖三种 <code>kind</code></td><td>FX.1</td><td><span class="badge new">新</span></td></tr>
+        <tr class="new"><td><code>FX.3</code></td><td>模式物化函数</td><td><code>materialise-schedule</code>：把生效中的模式展开成滚动 14 天内的带日期记录；幂等，键为 (pattern_id, date)</td><td>FX.2</td><td><span class="badge new">新</span></td></tr>
+        <tr><td><code>F1.1</code></td><td>工作安排 CRUD</td><td>单次工作安排的增删改查；时间、类型、地点、可远程、固定/弹性</td><td>FX.1</td><td><span class="badge chg">改</span></td></tr>
+        <tr><td><code>F1.2</code></td><td>所需照护窗口 CRUD</td><td>某个孩子在某天需要被照看的起止时间</td><td>FX.1</td><td>—</td></tr>
+        <tr><td><code>F1.3</code></td><td>照护覆盖 CRUD</td><td>谁在几点到几点照看；覆盖来源（TASKA / 家人 / 自己）</td><td>F1.2</td><td>—</td></tr>
+        <tr class="new"><td><code>F1.4</code></td><td>交接责任录入</td><td>覆盖记录上的 <code>collect_by</code>（提供者最晚接走时间）与 <code>handover_out_ref</code> / <code>handover_in_ref</code>（谁送、谁接）</td><td>F1.3</td><td><span class="badge new">新</span></td></tr>
+        <tr class="new"><td><code>F1.5</code></td><td>单次覆写与跳过</td><td>改动或删除某一天由模式生成的记录，标记 <code>is_override</code>，重新物化时不被覆盖</td><td>FX.3</td><td><span class="badge new">新</span></td></tr>
+        <tr><td><code>F1.6</code></td><td>输入校验</td><td>必填、end &gt; start、日期落在 14 天规划视野内、逐字段标错并保留其余输入</td><td>F1.1–F1.4</td><td><span class="badge chg">改</span></td></tr>
+        <tr><td><code>F1.7</code></td><td>合并周/日时间轴</td><td>工作、所需照护、实际覆盖同一刻度显示；模式生成与单次记录可区分；<b>交接标记与交接缺口可见</b></td><td>F1.1–F1.4</td><td><span class="badge chg">改</span></td></tr>
+        <tr><td><code>F2.1</code></td><td>覆盖合并与缺口计算</td><td>重叠覆盖先合并再相减；所需窗口 − 合并覆盖 = 缺口，不重复计数</td><td>F1.2 F1.3</td><td>—</td></tr>
+        <tr class="new"><td><code>F2.2</code></td><td>交接缺口计算</td><td>接送人到达时间 vs 提供者最晚接走时间，差额生成一段未覆盖区间</td><td>F1.4 FX.1</td><td><span class="badge new">新</span></td></tr>
+        <tr><td><code>F2.3</code></td><td>冲突检测与排序</td><td>区间规则 <code>start_A &lt; end_B AND start_B &lt; end_A</code>；固定+不可远程优先；平手用最早开始与记录 ID</td><td>F2.1 F2.2</td><td>—</td></tr>
+        <tr><td><code>F2.4</code></td><td>冲突解释与状态维护</td><td>点名工作、未覆盖窗口、时长、所用规则；编辑后清除/缩短；重算失败不假清除</td><td>F2.3</td><td>—</td></tr>
+        <tr><td><code>F2.5</code></td><td>事件与定时检测</td><td>DB 事件触发 + 每日扫描 14 天；显示最后一次成功检测时间</td><td>F2.3 FX.3</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout ok">
+    <p><b>建议的建造顺序：</b><code>F0.1 F0.2 F0.3 → FX.1 → F1.1 F1.2 F1.3 → F2.1 F2.3 F2.4</code>（先打通 Google OAuth 和真实账号数据）<b>→ FX.2 FX.3 F1.5 F1.6</b>（重复模式）<b>→ F1.4 F2.2</b>（交接）<b>→ F1.7 F2.5 F2.6</b>（视图、调度与本地提醒收尾）。</p>
+  </div>
+</section>
+
+<!-- ═══════ DATA ═══════ -->
+<section id="data">
+  <div class="head">
+    <p class="eyebrow">02 / 数据模型</p>
+    <h2>7 张 owner-scoped 表 + 1 张只读参照表</h2>
+    <p class="kicker">Weekly patterns, dated commitments, conflicts and sweep evidence; no push-token table in Iteration 1.</p>
+  </div>
+
+  <h3 class="sub">新集合 <span class="mono">schedule_patterns</span> <span class="badge new">新</span></h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+      <tbody>
+        <tr><td><code>pattern_id</code></td><td class="mono">UUID PK</td><td>—</td></tr>
+        <tr><td><code>user_id</code></td><td class="mono">UUID FK</td><td>owner；权限在创建时绑定</td></tr>
+        <tr><td><code>kind</code></td><td class="mono">ENUM</td><td><code>work</code> · <code>care_required</code> · <code>care_coverage</code> —— 决定物化到哪张表</td></tr>
+        <tr><td><code>child_id</code></td><td class="mono">UUID FK?</td><td>两种 care kind 必填，work 为空</td></tr>
+        <tr><td><code>byweekday</code></td><td class="mono">CSV</td><td><code>MON,TUE,WED,THU,FRI</code>。只支持按周重复 —— 刻意不做 RRULE</td></tr>
+        <tr><td><code>start_time</code> <code>end_time</code></td><td class="mono">TIME</td><td>本地挂钟时间。马来西亚单时区无夏令时，无歧义</td></tr>
+        <tr><td><code>effective_from</code></td><td class="mono">DATE</td><td>模式从哪天起生效</td></tr>
+        <tr><td><code>effective_until</code></td><td class="mono">DATE?</td><td>空 = 无限期</td></tr>
+        <tr><td><code>payload</code></td><td class="mono">JSON</td><td>按 kind 复制到每条占位记录上的字段：work → <code>type, location, remote_possible, flexibility_level, priority</code>；care_coverage → <code>resource_ref, location, collect_by, handover_out_ref, handover_in_ref</code></td></tr>
+        <tr><td><code>created_at</code> <code>updated_at</code></td><td class="mono">DATETIME</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">既有集合上的新字段</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>集合</th><th>新增字段</th><th>为什么</th></tr></thead>
+      <tbody>
+        <tr class="new"><td><code>users</code></td><td><code>travel_home_care_min</code> <code>travel_care_work_min</code> <code>travel_home_work_min</code> <span class="mono dim">INT</span> · <code>email</code> · <code>google_subject</code> · <code>language</code> · <code>notify_hour</code></td><td>通勤分钟是交接计算的输入，<b>用户手填</b>，不调地图 API。账号由 Appwrite Auth user id 唯一标识；邮箱和 Google provider 信息只用于显示与账号关联。</td></tr>
+        <tr class="new"><td><code>work_commitments</code></td><td><code>pattern_id</code> <span class="mono dim">UUID FK?</span> · <code>is_override</code> <span class="mono dim">BOOL</span></td><td>标明这条是哪个模式生成的；被用户改过之后重新物化不再覆盖它</td></tr>
+        <tr class="new"><td><code>care_commitments</code></td><td><code>pattern_id</code> <code>is_override</code> · <code>collect_by</code> <span class="mono dim">TIME?</span> · <code>handover_out_ref</code> <code>handover_in_ref</code> <span class="mono dim">UUID?</span> · <code>band_state</code> <span class="mono dim">ENUM cov/gap/unk</span> · <code>source_records</code> <span class="mono dim">ARRAY</span></td><td>同上，加交接三件套。<code>collect_by</code> 对 TASKA 等场地型提供者必填，居家照护为空</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub">Iteration 1 完整集合表</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>集合</th><th>作用</th><th>权限</th></tr></thead>
+      <tbody>
+        <tr><td><code>users</code></td><td>账号、地点（粗精度）、通勤分钟数、通知偏好</td><td>owner</td></tr>
+        <tr><td><code>children</code></td><td>孩子档案：年龄段 0–4、每日所需照护窗口</td><td>owner</td></tr>
+        <tr><td><code>work_commitments</code></td><td>带日期的工作安排（单次或由模式生成）</td><td>owner</td></tr>
+        <tr><td><code>care_commitments</code></td><td>带日期的所需照护窗口与实际覆盖，含交接字段</td><td>owner</td></tr>
+        <tr class="new"><td><code>schedule_patterns</code></td><td>周重复规则，物化成上面两张表的记录</td><td>owner</td></tr>
+        <tr class="new"><td><code>conflicts</code></td><td>物化的当前与已解决冲突；带确定性 key、精确分钟、优先级、来源记录和最后验证时间</td><td>owner</td></tr>
+        <tr class="new"><td><code>sweeps</code> <span class="dim">← rev D 新增</span></td><td>每次检测跑一行：<code>started_at</code>、<code>finished_at</code>、<code>overall</code>（ok/partial/failed）、<code>per_source</code>（每个数据源的成败与重试次数）。<b>C7「扫描失败」要求按源分别上报</b> —— 没有这张表，「JKM register 连不上」和「今天没冲突」在界面上长得一样</td><td>owner</td></tr>
+        <tr><td><code>childcare_providers</code></td><td>JKM 注册 TASKA 只读切片 —— 覆盖记录的提供者从这里选，不手打</td><td>公开只读</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout warn">
+    <p><b>刻意不做的：</b>没有 RRULE、没有月/年重复、没有"每两周"、没有日历导入（.ics / Google Calendar）。<b>只有按周重复。</b>Aina 的工作和 TASKA 时间本来就是按周的，其余复杂度换不来对应的价值，而且日历导入会立刻把外部依赖拖进 Iteration 1。</p>
+  </div>
+</section>
+
+<!-- ═══════ ALGO ═══════ -->
+<section id="algo">
+  <div class="head">
+    <p class="eyebrow">03 / 算法规格</p>
+    <h2>四个纯函数，按这个顺序跑</h2>
+    <p class="kicker">Deterministic, testable, no external calls</p>
+  </div>
+
+  <h3 class="sub">A1 · 模式物化 <span class="mono dim">materialise-schedule</span></h3>
+  <div class="algo">
+    <p class="algo-t">输入：user_id, horizon_days = 14 · 输出：写入/更新的占位记录</p>
+<pre><span class="c"># 幂等：键为 (pattern_id, date)。覆写过的记录永不被触碰。</span>
+<span class="k">for</span> pattern <span class="k">in</span> active_patterns(user_id):
+    <span class="k">for</span> date <span class="k">in</span> range(today, today + horizon_days):
+        <span class="k">if</span> weekday(date) <span class="k">not in</span> pattern.byweekday:        <span class="c"># 不在这周几</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> date &lt; pattern.effective_from:                 <span class="k">continue</span>
+        <span class="k">if</span> pattern.effective_until <span class="k">and</span> date &gt; pattern.effective_until: <span class="k">continue</span>
+
+        existing = find(pattern_id=pattern.id, date=date)
+        <span class="k">if</span> existing <span class="k">and</span> existing.is_override:               <span class="c"># 用户改过，尊重她</span>
+            <span class="k">continue</span>
+        upsert(target_table(pattern.kind),
+               pattern_id=pattern.id, date=date,
+               start_time=pattern.start_time, end_time=pattern.end_time,
+               is_override=<span class="k">False</span>, **pattern.payload)
+
+<span class="c"># 模式被删除或缩短 effective_until 时：删除视野内所有 is_override=False 的后代记录</span></pre>
+  </div>
+  <div class="callout">
+    <p><b>触发时机：</b>① 模式创建或修改后立即跑一次（只跑该模式）② 每日 cron 跑一次全量，把视野往前滚一天。<b>这就是 R1.2 那个 14 天扫描能成立的前提</b> —— 先有记录，才扫得到冲突。</p>
+  </div>
+
+  <h3 class="sub">A2 · 覆盖合并与缺口 <span class="mono dim">compute-gaps</span></h3>
+  <div class="algo">
+    <p class="algo-t">输入：某个 child 某天的所需窗口与全部覆盖记录 · 输出：未覆盖区间列表</p>
+<pre>merged = merge_overlapping(sort_by_start(coverages))   <span class="c"># 重叠先合并，避免重复计数</span>
+gaps   = subtract_intervals(required_window, merged)
+<span class="k">return</span> [g <span class="k">for</span> g <span class="k">in</span> gaps <span class="k">if</span> duration(g) &gt; 0]        <span class="c"># 零长度不是缺口</span></pre>
+  </div>
+
+  <h3 class="sub">A3 · 交接缺口 <span class="mono dim">compute-handover-gaps</span> <span class="badge new">新</span></h3>
+  <div class="algo">
+    <p class="algo-t">输入：某天的覆盖记录 + 用户通勤分钟数 + 接送人的工作安排 · 输出：额外的未覆盖区间</p>
+<pre><span class="c"># ── 傍晚：她赶不及在 TASKA 关门前到 ──────────────────────</span>
+<span class="k">for</span> cov <span class="k">in</span> coverages_with(collect_by):
+    collector = cov.handover_out_ref
+    blocking  = last_commitment_ending_before_or_at(collector, cov.collect_by)
+    eta       = blocking.end_time + travel(blocking.location → cov.location)
+    <span class="k">if</span> eta &gt; cov.collect_by:
+        emit_gap([cov.collect_by, eta], reason=<span class="k">"handover_out"</span>)
+
+<span class="c"># ── 早晨：TASKA 开门太晚，她赶不上上班 ───────────────────</span>
+<span class="k">for</span> cov <span class="k">in</span> coverages_with(open_from):
+    dropper   = cov.handover_in_ref
+    first     = first_commitment_starting_after(dropper, cov.start_time)
+    must_leave_by = first.start_time − travel(cov.location → first.location)
+    <span class="k">if</span> cov.start_time &gt; must_leave_by:
+        emit_gap([must_leave_by, cov.start_time], reason=<span class="k">"handover_in"</span>)</pre>
+  </div>
+  <div class="callout ok">
+    <p><b>为什么这样设计：</b>交接缺口输出的就是一段普通的"未覆盖照护区间"，直接喂给 A4。<b>AC 2.1.1 的区间规则一个字都不用改</b>，18 条既有 AC 全部原样存活。这是最小侵入的做法。</p>
+    <p><b>具体长什么样：</b>TASKA 18:00 关门（<code>collect_by = 18:00</code>），她的客户会 18:00 在办公室结束，办公室→TASKA 手填 35 分钟 → ETA 18:35 → 生成一段 <code>[18:00, 18:35]</code> 的缺口，35 分钟，孩子无人照看。这段在原设计里是完全不可见的。</p>
+  </div>
+
+  <h3 class="sub">A4 · 冲突检测与排序 <span class="mono dim">detect-conflicts</span></h3>
+  <div class="algo">
+    <p class="algo-t">输入：A2 + A3 的全部未覆盖区间 + 当天工作安排 · 输出：冲突列表</p>
+<pre><span class="k">for</span> gap <span class="k">in</span> (gaps_from_A2 + gaps_from_A3):
+    <span class="k">for</span> w <span class="k">in</span> work_commitments(date):
+        <span class="k">if</span> gap.start &lt; w.end <span class="k">and</span> w.start &lt; gap.end:      <span class="c"># 唯一的区间规则</span>
+            overlap = [max(gap.start,w.start), min(gap.end,w.end)]
+            <span class="k">if</span> duration(overlap) &gt; 0:                     <span class="c"># 相接不算冲突</span>
+                upsert_conflict(key=(child, date, gap), 
+                                minutes=duration(overlap), at_risk=w, source=gap.reason)
+
+<span class="c"># 排序：确定性，可复现</span>
+sort_key = (0 <span class="k">if</span> (w.fixed <span class="k">and not</span> w.remote_possible) <span class="k">else</span> 1,  w.start_time,  w.id)</pre>
+  </div>
+</section>
+
+<!-- ═══════ SCREENS ═══════ -->
+<section id="screens">
+  <div class="head">
+    <p class="eyebrow">04 / 屏幕</p>
+    <h2>24 屏，来自 41 屏交付稿</h2>
+  </div>
+  <div class="grid g3">
+    <div class="card edge green"><span class="tag">A1–A3 · 登录</span><h4>Welcome · Google 授权 · 返回结果</h4>
+      <ul><li>A1 欢迎：液态色块、双语切换、一个明确的 Google 登录按钮</li><li>A2 交给系统浏览器与 Google 账号选择器完成授权，app 不绘制也不收集密码</li><li>A3 授权成功返回设置流程；取消、断网或 provider 错误返回欢迎页并给出可重试说明</li></ul></div>
+    <div class="card edge indigo"><span class="tag">B1–B6 · 设置</span><h4>姓名 · 孩子 · 照护 · 工作 · 通知 · 位置</h4>
+      <ul><li>B2 <b>从一开始就多孩子</b> —— 每个孩子一个独立的环</li><li>B3 公共假期闭园算 <b>uncovered，不是 unknown</b></li><li>B4 通勤<b>两头都算</b>，否则 15:30 下班去接 16:00 会看起来可行</li><li>B5/B6 <b>权限在理由出现在屏幕上之后才请求</b>，拒绝是一条有明确后果的正常路径</li></ul></div>
+    <div class="card edge indigo"><span class="tag">B8–B11 · 第一次扫描</span><h4>Sweep · All clear · First gap · Coach marks</h4>
+      <ul><li>孩子档案：年龄段 0–4、每日所需照护窗口</li><li>家、工作地点（粗精度）</li><li class="mono" style="color:var(--green)">新 · 三个通勤分钟数：家↔照护、照护↔工作、家↔工作</li><li class="mono" style="color:var(--green)">新 · 一句话解释为什么要这几个数（否则读起来像在要位置权限）</li></ul></div>
+    <div class="card edge indigo"><span class="tag">屏 2 · Weekly schedule</span><h4>工作安排</h4>
+      <ul><li>单次安排：时间、类型、地点、可远程、固定/弹性</li><li class="mono" style="color:var(--green)">新 · 模式编辑器：勾周几 + 起止时间 + 生效区间</li><li class="mono" style="color:var(--green)">新 · 模式生成的记录有视觉标识，改动时提示"只改这天 / 改整个模式"</li><li class="mono" style="color:var(--amber)">改 · 视野从一周变成滚动 14 天</li></ul></div>
+    <div class="card edge indigo"><span class="tag">屏 3 · Care coverage</span><h4>谁在照看</h4>
+      <ul><li>提供者从 JKM 注册名单选，不手打</li><li>覆盖起止、可选备注</li><li class="mono" style="color:var(--green)">新 · 最晚接走时间 <code>collect_by</code></li><li class="mono" style="color:var(--green)">新 · 谁送、谁接</li><li class="mono" style="color:var(--green)">新 · 照护覆盖也能设成重复模式（TASKA 的作息本来就是固定的）</li></ul></div>
+    <div class="card edge red"><span class="tag">屏 4 · Day view + conflict</span><h4>同轴时间轴与冲突卡</h4>
+      <ul><li>工作、所需照护、实际覆盖同一刻度，图例一致</li><li>未覆盖标红，点名受影响的工作与分钟数</li><li class="mono" style="color:var(--green)">新 · 交接标记：在 <code>collect_by</code> 和 ETA 两个时刻各一个针，中间阴影</li><li class="mono" style="color:var(--green)">新 · 交接缺口的解释文案 —— 见下方措辞规则</li><li>最后一次成功检测时间；超过 24 小时明说</li><li class="mono" style="color:var(--green)">本地提醒状态只表示本机是否已排程，不声称云端已投递</li></ul></div>
+  </div>
+  <div class="callout warn">
+    <p><b>新增一条措辞规则（要写进 design asset README）：</b>交接缺口只描述<b>事实区间</b>，不做评价。写「18:00–18:35 没有成年人在场（TASKA 18:00 关门，你 18:35 到）」，<b>不写</b>「你会迟到 35 分钟」或「你需要提前下班」。系统报告区间，不替她下判断 —— 这和 G5「你来决定，我从不替你决定」是同一条规则。</p>
+  </div>
+</section>
+
+<!-- ═══════ FR ═══════ -->
+<section id="fr">
+  <div class="head">
+    <p class="eyebrow">05 / 功能需求</p>
+    <h2>43 条功能需求</h2>
+    <p class="kicker">Each maps to at least one acceptance criterion</p>
+  </div>
+  <div class="fr">
+    <div class="fr-grp">FR-0 · 账号与访问（Google OAuth）</div>
+    <div class="fr-row"><span class="id">FR-01</span><span class="t">欢迎页提供一个清晰的 <b>Continue with Google</b> 动作，通过 Appwrite <code>createOAuth2Session</code> 发起系统授权。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-02</span><span class="t">账号选择、同意与认证发生在 Google / 系统浏览器中；EqualPath <b>不绘制、不请求、不存储 Google 密码</b>。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-03</span><span class="t">授权成功建立 Appwrite 会话并进入该用户自己的数据空间；首次登录只建立一个 owner-scoped 档案。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-04</span><span class="t">取消授权、断网或 provider 错误不建立 app 登录状态，返回欢迎页并显示可重试的人话说明。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-05</span><span class="t">同一个 Appwrite Auth user id 始终复用同一档案；刷新或重新打开 app 不产生重复档案。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-06</span><span class="t">取消、断网、投递失败时<b>不创建会话与档案</b>，说明原因，可改用另一种方式。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-07</span><span class="t">登出清除 Appwrite 当前会话与本机待处理提醒；删号先撤回未结请求，再删除 owner-scoped 数据与 Auth 账号。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-08</span><span class="t">换新机登录同一账号前，<b>先撤回所有待回复的确认请求</b>。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-09</span><span class="t">删号<b>先撤回每一条未结请求</b>，再移除她拥有的每一条记录与全部设备注册，屏幕确认，地址可重新注册。</span><span class="s new">新</span></div>
+
+    <div class="fr-grp">FR-A · 档案与地基</div>
+    <div class="fr-row"><span class="id">FR-A1</span><span class="t">已认证用户可创建并维护一份用户档案，含家与工作地点，地点只存到"仍能排序距离"的最粗精度。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-A2</span><span class="t">用户可创建一个或多个孩子档案，含年龄段（0–4）与每日所需照护窗口。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-A3</span><span class="t"><b>用户可录入三个通勤分钟数</b>（家↔照护、照护↔工作、家↔工作），系统解释这些数字用来算什么。数值由用户提供，<b>系统不调用任何外部地图服务</b>。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-A4</span><span class="t">每条用户拥有的记录在创建时把文档权限绑定到 <code>user_id</code>；第二个账号在任一集合上读写都返回 404。</span><span class="s same">既有</span></div>
+
+    <div class="fr-grp">FR-B · 重复模式</div>
+    <div class="fr-row"><span class="id">FR-B1</span><span class="t"><b>用户可创建按周重复的模式</b>，指定 kind（工作 / 所需照护 / 照护覆盖）、周几、起止时间与生效区间。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-B2</span><span class="t">系统把生效中的模式物化成<b>滚动 14 天规划视野</b>内的带日期记录，操作幂等，键为 (pattern_id, date)。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-B3</span><span class="t">用户修改或删除某一天由模式生成的记录时，该记录标记为 <code>is_override</code>，<b>后续物化永不覆盖它</b>。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-B4</span><span class="t">用户修改模式本身时，视野内所有非覆写的后代记录被重新生成；覆写记录保持不变，并在界面上告知有几条被保留。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-B5</span><span class="t">用户删除模式时，视野内非覆写的后代记录一并删除；覆写记录保留并脱离模式。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-B6</span><span class="t">界面必须能区分"由模式生成"与"单次录入"的记录，且修改模式生成的记录时提供「只改这一天 / 改整个模式」两个选项。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-B7</span><span class="t">系统<b>只支持按周重复</b>。不支持 RRULE、月/年重复、隔周重复或日历导入。</span><span class="s new">新</span></div>
+
+    <div class="fr-grp">FR-C · 工作安排</div>
+    <div class="fr-row"><span class="id">FR-C1</span><span class="t">用户可创建、编辑、删除工作安排，含日期、起止时间、类型、地点、可远程标记、固定/弹性优先级。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-C2</span><span class="t">保存有效修改或确认删除后，时间轴立即更新，每个受影响的日期被标记为需要重新检测。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-C3</span><span class="t">校验：必填字段齐全、end 晚于 start、<b>日期落在 14 天滚动规划视野内</b>（原为"展示的规划周"）。无效时逐字段标错并保留其余输入。</span><span class="s chg">改</span></div>
+
+    <div class="fr-grp">FR-D · 照护与交接</div>
+    <div class="fr-row"><span class="id">FR-D1</span><span class="t">用户可记录某个孩子在某天的所需照护窗口。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-D2</span><span class="t">用户可添加照护覆盖，提供者<b>从 JKM 注册 TASKA 名单选取</b>而非手打；重叠覆盖在计算总量前先合并。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-D3</span><span class="t"><b>场地型提供者的覆盖记录必须带 <code>collect_by</code></b>（该提供者允许的最晚接走时间）；居家照护可为空。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-D4</span><span class="t"><b>覆盖记录可指定谁负责送达与谁负责接走</b>（<code>handover_in_ref</code> / <code>handover_out_ref</code>）。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-D5</span><span class="t">照护覆盖的增删改与校验行为与工作安排一致：有效修改立即更新缺口，无效输入被拦下并给出明确原因。</span><span class="s same">既有</span></div>
+
+    <div class="fr-grp">FR-E · 检测</div>
+    <div class="fr-row"><span class="id">FR-E1</span><span class="t">系统用 <code>start_A &lt; end_B AND start_B &lt; end_A</code> 检测未覆盖照护与工作的重叠，报告确切分钟数与受影响的工作安排。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-E2</span><span class="t">相接的零分钟边界不算冲突；部分重叠、包含、跨午夜的正时长重叠按自然日拆分且只报告一次。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-E3</span><span class="t"><b>系统计算交接缺口</b>：接送人的实际到达时间晚于 <code>collect_by</code>，或提供者开门时间晚于送达人必须离开的时间，差额作为一段未覆盖照护区间，与其他缺口同等对待。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-E4</span><span class="t"><b>交接缺口在冲突记录上标明来源</b>（<code>handover_in</code> / <code>handover_out</code>），解释中说明用了哪个通勤数值与哪条工作安排。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-E5</span><span class="t">冲突排序确定性：固定且不可远程的排最前，平手用最早开始时间，再平手用记录 ID。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-E6</span><span class="t">每条告警点名工作安排、未覆盖窗口、重叠时长与所用的具体优先级规则，不发明原因、不给建议。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-E7</span><span class="t">相关记录变更后重算：完全解决则清除并记录"由日程变更解决"，部分解决则保留同一逻辑身份并更新为剩余区间。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-E8</span><span class="t">重算失败或重试时保持最后一次已验证状态，给出可重试错误，不产生重复，<b>永不显示假的"已清除"</b>。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-E9</span><span class="t">检测由数据库事件触发，<b>并且</b>每日定时扫描规划视野内的全部日期。</span><span class="s chg">改</span></div>
+    <div class="fr-row"><span class="id">FR-E11</span><span class="t"><b>告警使用 iOS 本地通知</b>：每次成功同步后取消陈旧请求并按当前 Appwrite 冲突重建未来 14 天提醒。权限被拒时不影响 app 内结果，也不声称提醒已送达。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-E10</span><span class="t">界面显示最后一次成功检测的时间；超过 24 小时未运行时明确说明，而不是让沉默看起来像"无冲突"。</span><span class="s same">既有</span></div>
+
+    <div class="fr-grp">FR-F · 视图</div>
+    <div class="fr-row"><span class="id">FR-F1</span><span class="t">工作、所需照护、实际覆盖在同一"日期 × 时间"刻度上显示，标签可区分，图例一致。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-F2</span><span class="t">显示确切的已覆盖与未覆盖时段；重叠覆盖先合并再算总量。</span><span class="s same">既有</span></div>
+    <div class="fr-row"><span class="id">FR-F3</span><span class="t"><b>日视图显示交接标记</b>：在 <code>collect_by</code> 与接送人 ETA 两个时刻各一个标记，中间区间以缺口样式呈现。</span><span class="s new">新</span></div>
+    <div class="fr-row"><span class="id">FR-F4</span><span class="t">空、加载中、加载失败、刚变更四种状态都有对应呈现；成功后显示最新记录，不留陈旧或重复条目。</span><span class="s same">既有</span></div>
+  </div>
+</section>
+
+<!-- ═══════ NFR ═══════ -->
+<section id="nfr">
+  <div class="head">
+    <p class="eyebrow">06 / 非功能需求</p>
+    <h2>Iteration 1 适用的架构约束</h2>
+    <p class="kicker">The subset of G1–G8 / R that this iteration must satisfy</p>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>ID</th><th>要求</th><th>守住的承诺</th></tr></thead>
+      <tbody>
+        <tr><td><code>R1.1</code></td><td>检测由 <code>work_commitments</code> / <code>care_commitments</code> / <code>children</code> / <code>schedule_patterns</code> 的增删改事件触发，不是页面打开时才算</td><td class="mono">G1 及时性</td></tr>
+        <tr class="chg"><td><code>R1.2</code></td><td>每天至少一次定时扫描<b>滚动 14 天规划视野</b>，能为一个没人打开过的日期生成冲突。<b>物化模式是这条能成立的前提</b></td><td class="mono">G1</td></tr>
+        <tr class="chg"><td><code>R1.3</code></td><td>新冲突在用户选定的本地时间排入本机通知；同一日期只保留一条当前提醒，绝不在当天开始后才发</td><td class="mono">G1</td></tr>
+        <tr><td><code>R1.4</code></td><td>显示最后一次成功检测的时间；超过 24 小时未跑，日视图必须明说</td><td class="mono">G1</td></tr>
+        <tr class="new"><td><code>R1.6</code></td><td><b>本地通知权限被拒时，app 内冲突结果仍完整可读；设置页说明本机不会在 app 关闭时弹出提醒。</b></td><td class="mono">G1</td></tr>
+        <tr class="new"><td><code>R1.5</code></td><td><b>物化是幂等的</b>：同一天重复运行不产生重复记录，也不覆盖已被用户改动的记录</td><td class="mono">G1 · G7</td></tr>
+        <tr class="new"><td><code>R3.5</code></td><td><b>交接缺口必须暴露它的算法输入</b>：用了哪个通勤分钟数、哪条工作安排的结束时间、哪个 <code>collect_by</code>。一个算出来的缺口如果解释不清来源，与系统出错无法区分</td><td class="mono">G3 诚实</td></tr>
+        <tr><td><code>R7.3</code></td><td>冲突是可寻址的实体，不是一次临时计算</td><td class="mono">G7 连续性</td></tr>
+        <tr><td><code>R8.1</code></td><td>文档权限创建时绑定 <code>user_id</code>；自动化测试断言第二个账号在<b>每一张</b>用户表（含 <code>schedule_patterns</code>）上都收到 404</td><td class="mono">G8 保密</td></tr>
+        <tr class="chg"><td><code>R8.2</code></td><td>家庭住址存到"仍能排序距离"的最粗精度。<b>通勤分钟数是用户自报的整数，不是坐标</b>，因此不构成新的位置精度风险</td><td class="mono">G8</td></tr>
+        <tr class="new"><td><code>R8.5</code></td><td><b>产品里不存在任何密码字段。</b>Google 认证发生在 provider / 系统授权界面；EqualPath 只接收 Appwrite 会话结果</td><td class="mono">G8 保密</td></tr>
+        <tr class="new"><td><code>R8.7</code></td><td>本地提醒<b>只写哪一天有冲突</b> —— 不含孩子姓名、提供者、地址或时间窗口；细节在应用内认证后拉取</td><td class="mono">G8</td></tr>
+        <tr class="new"><td><code>R8.6</code></td><td>登出与删号时清理当前 Appwrite 会话、本机缓存状态和所有待处理本地提醒；Iteration 1 不保存设备推送 token</td><td class="mono">G8</td></tr>
+        <tr><td><code>R8.4</code></td><td>参照集合（<code>childcare_providers</code>）全局可读，且靠"schema 里根本没有用户关联字段"来强制它不含个人数据</td><td class="mono">G8</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <p><b>Iteration 1 依然零外部依赖。</b>通勤分钟数手填而非调地图 API，是刻意的：它保住了"没有 OR-Tools 冷启动、没有 Gemini、JKM 导入不在关键路径上"这个干净的迭代边界 —— 每条需求都能完整地建、完整地测，没有任何东西需要 mock。距离计算（Haversine）留在 Iteration 2 和 E3/E4 一起来。</p>
+  </div>
+</section>
+
+<!-- ═══════ AC ═══════ -->
+<section id="ac">
+  <div class="head">
+    <p class="eyebrow">07 / 验收条件</p>
+    <h2>31 条 Given/When/Then</h2>
+    <p class="kicker">All 31 AC are generated from the journey-verified Word source</p>
+  </div>
+  <div class="ctl">
+    <button class="b" data-act="open">展开全部</button>
+    <button class="b" data-act="close">收起全部</button>
+    <span class="hint">3 Epic / 10 User Stories / 31 AC · 与实际 App、Word 和 LeanKit 同源</span>
+  </div>
+
+  <details class="ep" open>
+    <summary><span class="eid">E0</span><h4>Account and First-Time Setup</h4><span class="cnt">3 stories · 8 AC</span></summary>
+    <div class="ac-list">
+      <div class="usrow"><span class="sid">US 0.1</span>Sign In with Google <span class="cnt mono dim">3 AC</span></div>
+      <div class="ac"><code>0.1.1</code><div class="t"><b>Start Google authorisation</b><em>Given no valid Appwrite session exists and the welcome screen is visible,<br>When she selects Continue with Google,<br>Then EqualPath opens the Appwrite Google OAuth flow in the system/provider experience, displays no password field of its own and does not collect or store the Google password.</em></div></div>
+      <div class="ac"><code>0.1.2</code><div class="t"><b>Complete authorisation and reuse one account</b><em>Given Google authorisation succeeds for an Appwrite Auth user,<br>When the OAuth callback returns to EqualPath now or the same user signs in again later,<br>Then the app establishes the Appwrite session, creates at most one owner profile for that Auth user, reuses it on later sign-ins and opens either first-time setup or the existing owner-scoped experience as appropriate.</em></div></div>
+      <div class="ac"><code>0.1.3</code><div class="t"><b>Cancel or fail safely</b><em>Given the Google flow is cancelled, the network is unavailable, the provider returns an error or the callback cannot be completed,<br>When control returns to EqualPath,<br>Then no authenticated data space is opened, no owner profile is created from the failed attempt, a plain-language retry state is shown and Continue with Google remains available.</em></div></div>
+
+      <div class="usrow"><span class="sid">US 0.2</span>Complete First-Time Family Setup <span class="cnt mono dim">3 AC</span></div>
+      <div class="ac"><code>0.2.1</code><div class="t"><b>Capture the owner and children</b><em>Given a Google-authenticated owner has not completed setup,<br>When she reviews the Google-provided name and read-only email and adds at least one child with a name and age group,<br>Then the app validates required fields, keeps the records owner-scoped and lets her continue without asking for the Google password or editing the authenticated email.</em></div></div>
+      <div class="ac"><code>0.2.2</code><div class="t"><b>Capture weekly routine, travel and support inputs</b><em>Given the owner and at least one child are present in setup,<br>When she records registered-care days and times, work days, times and work mode, broad home and work areas, the three manually entered travel estimates, optional support people and her local-reminder choice,<br>Then EqualPath validates each step, describes areas rather than exact live location, performs no live tracking or map lookup and preserves entered values when a step needs correction.</em></div></div>
+      <div class="ac"><code>0.2.3</code><div class="t"><b>Save setup and show the first 14-day result</b><em>Given all required setup inputs are valid,<br>When she completes the final setup step,<br>Then EqualPath writes the owner-scoped profile, children, weekly patterns and support data to Appwrite, materialises dated occurrences across the rolling 14-day horizon, runs the first sweep and shows either the exact first gap result or a truthful no-gap/unknown state; if setup fails, the app retains the setup state and offers a retry instead of claiming completion.</em></div></div>
+
+      <div class="usrow"><span class="sid">US 0.3</span>Resume Securely, Receive Local Reminders and Leave <span class="cnt mono dim">2 AC</span></div>
+      <div class="ac"><code>0.3.1</code><div class="t"><b>Restore the session and refresh local reminders</b><em>Given a user has a valid Appwrite session and has completed setup,<br>When she closes and reopens EqualPath or the app completes a foreground schedule sync,<br>Then the app resumes directly in her owner-scoped experience without repeating Google sign-in or setup and, when local reminders are enabled and iOS permission is granted, rebuilds this iPhone&#x27;s next 14 days of care-gap reminders for 21:00 on the preceding evening; no APNs token, cloud push or email fallback is used in Iteration 1.</em></div></div>
+      <div class="ac"><code>0.3.2</code><div class="t"><b>Sign out or delete the account safely</b><em>Given a signed-in owner opens account settings,<br>When she signs out or explicitly confirms account deletion,<br>Then sign-out clears the Appwrite session, local owner state and pending local reminders before returning to the welcome screen; deletion removes the owner&#x27;s Appwrite data and Auth account only after confirmation, while a failure is reported without falsely claiming the account was deleted.</em></div></div>
+
+    </div>
+    <div class="dod">
+      <h5>Definition of Done — Epic 0.0（actual app journey）</h5>
+      <ul>
+        <li>All three user stories and all eight Given/When/Then acceptance criteria pass.</li>
+        <li>Continue with Google is the only Iteration 1 sign-in method; EqualPath contains no password, email-code or Sign in with Apple flow.</li>
+        <li>First successful authorisation creates at most one Appwrite owner profile, and cancelled or failed authorisation never opens an authenticated data space.</li>
+        <li>First-time setup persists owner-scoped profile, child, pattern, support and preference data, materialises the rolling 14-day horizon and returns a first sweep result from Appwrite.</li>
+        <li>The session survives an app relaunch in the iOS keychain and never exposes another owner&#x27;s records.</li>
+        <li>Local notification permission, denial and disabled states are tested; reminders are generated on-device for the next 14 days at 21:00 and are cleared on sign-out or deletion.</li>
+        <li>Setup failure, retry, session expiry, sign-out and account-deletion failure states are covered without false success messages.</li>
+        <li>LeanKit links, documentation, test evidence and the Iteration 1 demo are current.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="ep" open>
+    <summary><span class="eid">E1</span><h4>Work &amp; Care Schedule Management</h4><span class="cnt">4 stories · 13 AC</span></summary>
+    <div class="ac-list">
+      <div class="usrow"><span class="sid">US 1.1</span>Create and Manage Work Commitments <span class="cnt mono dim">3 AC</span></div>
+      <div class="ac"><code>1.1.1</code><div class="t"><b>Create a work commitment</b><em>Given a signed-in owner is viewing a date in the rolling 14-day plan,<br>When she adds a work record with its date, start and end, title, location, remote-capable choice and fixed or flexible priority,<br>Then the app writes the record to her Appwrite account only, refreshes the affected date and displays it with the Work label and source details.</em></div></div>
+      <div class="ac"><code>1.1.2</code><div class="t"><b>Edit or delete a work commitment</b><em>Given the owner has an existing one-off or pattern-generated work occurrence,<br>When she saves valid changes or confirms deletion and, for a pattern occurrence, chooses only this day or the weekly pattern,<br>Then the chosen scope is applied, the rolling plan and affected sweep refresh, and a single-day change is preserved as an override rather than overwritten by later materialisation.</em></div></div>
+      <div class="ac"><code>1.1.3</code><div class="t"><b>Validate work commitment input</b><em>Given the owner is creating or editing a work commitment,<br>When a required value is missing, start and end are equal, a weekly pattern does not end later on the same day, or a one-off record ends earlier without being treated as an explicit next-day interval,<br>Then the save is blocked with a clear reason and all other entered values remain available for correction.</em></div></div>
+
+      <div class="usrow"><span class="sid">US 1.2</span>Create and Manage Required Care and Coverage <span class="cnt mono dim">4 AC</span></div>
+      <div class="ac"><code>1.2.1</code><div class="t"><b>Record a child&#x27;s required-care window</b><em>Given the owner has an owner-scoped child profile,<br>When she adds a Care needed record for that child with a date or weekly days and a start and end time,<br>Then the app saves the record to Appwrite, materialises it when it is a weekly pattern and displays it on the selected child&#x27;s schedule.</em></div></div>
+      <div class="ac"><code>1.2.2</code><div class="t"><b>Add childcare coverage</b><em>Given a child may need care during the rolling horizon,<br>When the owner adds a Care coverage record with the child, provider or carer, time window and relevant details,<br>Then the app places the coverage on the same timeline and merges overlapping coverage before calculating the remaining uncovered portions.</em></div></div>
+      <div class="ac"><code>1.2.3</code><div class="t"><b>Edit, delete and validate care records</b><em>Given the owner has an existing required-care or coverage record,<br>When she saves a valid edit, confirms deletion or submits incomplete or invalid values,<br>Then valid changes update the chosen day or pattern scope and trigger an affected-date refresh, while invalid changes are blocked with the rest of the form preserved.</em></div></div>
+      <div class="ac"><code>1.2.4</code><div class="t"><b>Record handover responsibilities without inventing certainty</b><em>Given the owner is creating or editing a Care coverage record,<br>When she selects who drops off and who collects, the provider&#x27;s applicable time boundary and the manually entered home–care, care–work and home–work travel estimates, or leaves an applicable input unassigned,<br>Then the saved occurrence shows the inbound and outbound handover assignments; missing responsibility or travel inputs remain visibly unassigned or unknown and are never interpreted as proof that the handover is feasible.</em></div></div>
+
+      <div class="usrow"><span class="sid">US 1.3</span>View the Combined 14-Day Plan <span class="cnt mono dim">3 AC</span></div>
+      <div class="ac"><code>1.3.1</code><div class="t"><b>Show one combined 14-day plan</b><em>Given the owner has one-off or materialised work, required-care or coverage records in the current horizon,<br>When she opens Schedule and selects a date,<br>Then the app shows all 14 dates, marks dates with detected gaps, uses one consistent Work/Care needed/Coverage legend and lists that date&#x27;s owner-scoped Appwrite records with weekly-pattern and handover details where applicable.</em></div></div>
+      <div class="ac"><code>1.3.2</code><div class="t"><b>Distinguish covered, uncovered and unknown time</b><em>Given a required-care interval is fully, partly or multiply covered, or the evidence needed to classify it is incomplete,<br>When the schedule and sweep are calculated,<br>Then overlapping coverage is counted once, exact remaining uncovered intervals are shown per child, aggregate totals do not hide the per-child source intervals and incomplete evidence remains Unknown rather than No gap.</em></div></div>
+      <div class="ac"><code>1.3.3</code><div class="t"><b>Keep schedule states current and truthful</b><em>Given the selected date has no records, is loading, fails to load or has just changed,<br>When Schedule opens or refreshes,<br>Then the app shows the matching empty, loading or retryable error state and, after a successful refresh, displays the latest verified records without stale or duplicate occurrences.</em></div></div>
+
+      <div class="usrow"><span class="sid">US 1.4</span>Maintain a Repeating Weekly Pattern <span class="cnt mono dim">3 AC</span></div>
+      <div class="ac"><code>1.4.1</code><div class="t"><b>Create a repeating weekly pattern</b><em>Given the owner opens New Entry from Schedule,<br>When she enables Repeat every week, selects one or more weekdays, an effective date and optional end date, completes the type-specific fields and saves,<br>Then the app stores one owner-scoped pattern and creates the corresponding dated occurrences inside the rolling 14-day horizon without requiring a separate save for each day.</em></div></div>
+      <div class="ac"><code>1.4.2</code><div class="t"><b>Materialise occurrences idempotently</b><em>Given an effective weekly pattern exists,<br>When materialisation runs after setup, app sync, pattern save or a later scheduled run,<br>Then each pattern-and-date pair produces at most one occurrence, repeated runs create no duplicates and the horizon can advance while preserving existing valid occurrence identity.</em></div></div>
+      <div class="ac"><code>1.4.3</code><div class="t"><b>Edit, skip or delete at the correct scope</b><em>Given a selected occurrence belongs to a weekly pattern,<br>When the owner chooses Edit only this day, Edit weekly pattern, or Delete or skip and confirms the intended scope,<br>Then a day-only change becomes a preserved override, a skipped day stays skipped, and an edited or deleted pattern affects only its non-overridden occurrences while deliberate exceptions remain intact.</em></div></div>
+
+    </div>
+    <div class="dod">
+      <h5>Definition of Done — Epic 1.0（actual app journey）</h5>
+      <ul>
+        <li>All four user stories and all thirteen Given/When/Then acceptance criteria pass.</li>
+        <li>A user can create, edit and delete one-off Work, Care needed and Care coverage records in the rolling 14-day horizon.</li>
+        <li>Repeating weekly patterns can be created and managed with explicit day-only versus whole-pattern scope; materialisation is idempotent and preserves overrides and skips.</li>
+        <li>Schedule shows 14 dates, a consistent three-type legend, date-level source records, weekly-pattern provenance and handover assignments from Appwrite.</li>
+        <li>Overlapping coverage is merged before remaining gaps are calculated, and aggregate totals remain traceable to per-child intervals.</li>
+        <li>Missing handover responsibility or travel information stays unassigned or Unknown and never becomes a false no-gap result.</li>
+        <li>Empty, loading, retry, validation and next-day interval states are covered, and successful changes do not leave stale or duplicate occurrences.</li>
+        <li>Owner-only permissions and cross-account access tests cover every child, work, care and pattern record.</li>
+        <li>LeanKit links, documentation, test evidence and the Iteration 1 demo are current.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="ep" open>
+    <summary><span class="eid">E2</span><h4>Conflict Detection, Explanation &amp; Local Alerts</h4><span class="cnt">3 stories · 10 AC</span></summary>
+    <div class="ac-list">
+      <div class="usrow"><span class="sid">US 2.1</span>Detect Uncovered Care–Work Conflicts <span class="cnt mono dim">4 AC</span></div>
+      <div class="ac"><code>2.1.1</code><div class="t"><b>Detect the exact uncovered overlap</b><em>Given a day contains a work commitment and a required-care interval that is not fully covered,<br>When the initial or refreshed sweep runs,<br>Then the system applies the interval rule start_A &lt; end_B AND start_B &lt; end_A, creates the exact positive-duration overlap for each affected child and retains the work, care and coverage source references used to produce it.</em></div></div>
+      <div class="ac"><code>2.1.2</code><div class="t"><b>Handle interval edge cases</b><em>Given work, required-care and coverage intervals touch, partly overlap, contain one another, overlap through multiple providers or cross midnight,<br>When conflict detection runs,<br>Then touching zero-minute boundaries are not conflicts, overlapping coverage is merged before subtraction, every positive-duration result is split by calendar day and no minute is reported twice.</em></div></div>
+      <div class="ac"><code>2.1.3</code><div class="t"><b>Re-detect without duplicates</b><em>Given a relevant one-off record, pattern, occurrence, override, skip or handover input is created or changed,<br>When the affected dates are swept one or more times,<br>Then the system keeps one current record per logical conflict, updates or resolves the previous record rather than appending duplicates and records the latest successful check time.</em></div></div>
+      <div class="ac"><code>2.1.4</code><div class="t"><b>Calculate inbound and outbound handover gaps</b><em>Given a Care coverage occurrence has a provider boundary, a drop-off or collection responsibility and the required manually entered travel input,<br>When the handover calculation runs against the responsible person&#x27;s applicable work and travel timing,<br>Then a late collection produces the exact interval from the collection boundary to earliest feasible arrival with source handover_out, an impossible morning drop-off produces the symmetric handover_in interval, an exactly feasible boundary produces no handover gap, and missing inputs remain not calculated rather than no conflict.</em></div></div>
+
+      <div class="usrow"><span class="sid">US 2.2</span>Prioritise, Explain and Review Detected Conflicts <span class="cnt mono dim">3 AC</span></div>
+      <div class="ac"><code>2.2.1</code><div class="t"><b>Prioritise conflicts consistently</b><em>Given more than one current conflict exists across one or more children,<br>When Tomorrow or the conflict list is displayed,<br>Then fixed and non-remote work risk ranks ahead of flexible or remote-capable risk, ties use earliest start and stable record identity, and any aggregate number remains traceable to the per-child gaps it sums.</em></div></div>
+      <div class="ac"><code>2.2.2</code><div class="t"><b>Explain why a conflict exists</b><em>Given a current conflict is visible,<br>When the owner opens See the day,<br>Then the app shows the child, exact uncovered interval, duration and the Appwrite work, required-care and coverage records that produced it; a handover explanation additionally names its direction and timing inputs, without inventing a cause, vacancy, booking or recommendation.</em></div></div>
+      <div class="ac"><code>2.2.3</code><div class="t"><b>Show truthful states and review-only paths</b><em>Given the latest verified sweep has conflicts, no conflicts, insufficient evidence or a retryable load failure,<br>When the owner opens Tomorrow, a day or Possible paths,<br>Then the app shows the matching uncovered, No gap, Unknown or retry state and never clears a verified warning on failed refresh; any possible path is labelled as a draft for review only and cannot contact, notify or obtain confirmation from another person in Iteration 1.</em></div></div>
+
+      <div class="usrow"><span class="sid">US 2.3</span>Refresh Conflicts and Local Reminders After Schedule Changes <span class="cnt mono dim">3 AC</span></div>
+      <div class="ac"><code>2.3.1</code><div class="t"><b>Clear a resolved conflict</b><em>Given a verified active conflict exists,<br>When a valid schedule or pattern change fully covers the gap or removes the overlapping work,<br>Then the affected date is re-swept, the conflict is resolved in the same refresh, the UI shows the verified no-gap result and any obsolete local reminder is removed.</em></div></div>
+      <div class="ac"><code>2.3.2</code><div class="t"><b>Update a partially resolved conflict</b><em>Given a verified conflict is longer than the remaining uncovered interval,<br>When new or edited coverage resolves only part of it,<br>Then the same logical conflict is updated to the exact remaining interval and duration, source evidence is refreshed and the local reminder content is rebuilt without creating a duplicate conflict or notification.</em></div></div>
+      <div class="ac"><code>2.3.3</code><div class="t"><b>Preserve the last verified state when refresh fails</b><em>Given a schedule change is saved but sweep or Appwrite refresh fails, is retried or returns incomplete evidence,<br>When Tomorrow, Schedule or pending local reminders are refreshed,<br>Then the app retains the last verified conflict state, exposes a retryable error, creates no duplicates and never displays or schedules a false cleared/no-gap result; local reminders are changed only from a successful verified sync.</em></div></div>
+
+    </div>
+    <div class="dod">
+      <h5>Definition of Done — Epic 2.0（actual app journey）</h5>
+      <ul>
+        <li>All three user stories and all ten Given/When/Then acceptance criteria pass.</li>
+        <li>The exact-overlap rule is covered for touching, partial, nested, overlapping-coverage, zero-length and cross-midnight intervals.</li>
+        <li>Repeated sweeps are idempotent, retain source evidence and update or resolve a logical conflict without duplicate rows.</li>
+        <li>Inbound and outbound handover gaps are tested at feasible, exact-boundary, late and missing-input cases; missing evidence is not reported as no gap.</li>
+        <li>Tomorrow totals remain traceable to child-level intervals, and See the day exposes the Appwrite records that produced each result.</li>
+        <li>Possible paths are review-only drafts; Iteration 1 performs no carer contact, secure-link confirmation, booking or automatic commitment.</li>
+        <li>Successful schedule changes rebuild the next 14 days of 21:00 local reminders on the iPhone; failure retains the last verified UI and reminder state.</li>
+        <li>Owner scoping, local-notification permission/denial, retry and no-gap/unknown states are covered by automated and journey evidence.</li>
+        <li>LeanKit links, documentation, test evidence and the Iteration 1 demo are current.</li>
+      </ul>
+    </div>
+  </details>
+</section>
+
+<!-- ═══════ TEST ═══════ -->
+<section id="test">
+  <div class="head">
+    <p class="eyebrow">08 / 测试矩阵</p>
+    <h2>必须有测试证据的边界情形</h2>
+    <p class="kicker">The cases a marker will ask about</p>
+  </div>
+  <div class="grid g3">
+    <div class="card edge green"><span class="tag">登录与会话（Google OAuth）</span>
+      <ul><li>点击登录 → Appwrite 发起 Google 系统授权</li><li>授权成功 → 建会话并进入正确的 owner 数据空间</li><li>取消、断网、provider 或回调失败 → <b>不进入数据空间</b>，给出重试</li><li>同一 Appwrite user id 重复登录 → <b>仍是同一个档案</b></li><li>第二个 Google 账号 → 不能读取第一个账号的任何 owner 数据</li><li>会话过期 → 回欢迎页，<b>缓存日程不可读</b></li><li>登出 → 清会话、本机状态与本地提醒</li><li>删号 → 先撤回未结请求，再清空全部记录与 Auth 账号</li></ul></div>
+    <div class="card edge indigo"><span class="tag">区间规则（既有）</span>
+      <ul><li>相接：08:00–12:00 与 12:00–14:00 → 无冲突</li><li>部分重叠 → 只报重叠部分</li><li>嵌套包含 → 报内层</li><li>零长度区间 → 忽略</li><li>跨午夜 → 按自然日拆分，只报一次</li></ul></div>
+    <div class="card edge green"><span class="tag">重复模式（新）</span>
+      <ul><li>同一天跑两次物化 → 记录数不变</li><li>改过的那天 → 重新物化后仍是改过的值</li><li>模式生效区间缩短 → 视野内多余记录被删，覆写记录留下</li><li>模式删除 → 非覆写后代删除，覆写记录脱离模式保留</li><li>周日不在 byweekday → 不生成</li><li>视野边界：第 14 天生成，第 15 天不生成</li></ul></div>
+    <div class="card edge red"><span class="tag">交接缺口（新）</span>
+      <ul><li>ETA 恰好等于 collect_by → <b>零缺口，不报</b></li><li>ETA 晚于 collect_by → 报 [collect_by, ETA]</li><li>提供者开门晚于必须离开时间 → 报早晨缺口</li><li>缺通勤分钟数 → 明说"尚未计算"，<b>不报"无冲突"</b></li><li>接送人当天无工作安排 → 不生成交接缺口</li><li>交接缺口与普通缺口相邻 → 合并后只报一段</li></ul></div>
+    <div class="card edge amber"><span class="tag">重算与幂等（既有）</span>
+      <ul><li>连续两次保存 → 一条冲突</li><li>部分覆盖 → 冲突缩短、逻辑身份不变</li><li>重算抛异常 → 保持上次已验证状态 + 可重试错误</li><li>重算失败后刷新 → 不显示"已清除"</li></ul></div>
+    <div class="card edge teal"><span class="tag">权限（既有 + 新表）</span>
+      <ul><li>第二个账号读 <code>users</code> / <code>children</code> / <code>work_commitments</code> / <code>care_commitments</code> / <b><code>schedule_patterns</code></b> / <code>conflicts</code> → 全部 404</li><li>第二个账号写 → 全部 404</li><li>参照表 <code>childcare_providers</code> → 可读、不可写</li></ul></div>
+    <div class="card edge indigo"><span class="tag">状态与时区（既有）</span>
+      <ul><li>空 / 加载中 / 加载失败 / 刚变更四态</li><li>UTC 存储、Asia/Kuala_Lumpur 显示</li><li>最后检测时间超过 24 小时 → 日视图明说</li></ul></div>
+  </div>
+</section>
+
+<!-- ═══════ OUT ═══════ -->
+<section id="out">
+  <div class="head">
+    <p class="eyebrow">09 / 明确不在范围</p>
+    <h2>Iteration 1 不做的</h2>
+  </div>
+  <div class="grid g2">
+    <div class="card edge red"><span class="tag">后续迭代</span>
+      <ul><li>注册托儿所发现与选项比较（E3、E4）—— Iteration 1 只用 JKM 名单做提供者选择器</li><li>支持网络可用性（E5）</li><li>验证过的方案生成、比较与选择（E6）</li><li>显式确认与一次提醒（E7）</li><li>历史趋势（E8）与中断恢复（E10）</li></ul></div>
+    <div class="card edge red"><span class="tag">刻意不做，也不打算做</span>
+      <ul><li>RRULE / 月重复 / 隔周重复</li><li>日历导入（.ics、Google Calendar）—— 会把外部依赖拖进 Iteration 1</li><li>用地图 API 自动算通勤时间 —— 手填，Haversine 留到 Iteration 2</li><li><b>APNs、device token、云端推送或邮件 fallback</b> —— 等取得 Apple Developer 账户后再评估；当前只用 iOS 本地通知</li><li><b>Sign in with Apple</b> —— Iteration 1 内部 demo 使用 Google OAuth；上架前结合指南 4.8 再评估</li><li>邮件验证码、邮箱密码、手机号 + 短信验证码 —— 都不属于当前登录规格</li><li>Android —— SwiftUI 只跑 iOS，跨平台是另一个决定</li><li>B4 的<b>日历导入开关</b> —— 交付稿里画了（标注 read-only），但 Iteration 1 不做</li><li>实时托儿所空位、劳动权益建议 —— 项目层面的 won't build</li></ul></div>
+  </div>
+</section>
+
+<footer>
+  <div style="border-top:1px solid var(--rule);padding-top:22px">
+    <p><b>版本。</b>rev E · 30 Aug 2026。相对 rev D 的变化：产品负责人确认登录唯一规格为 <b>Appwrite Google OAuth</b>；邮件验证码、邮箱密码与 Sign in with Apple 从 Iteration 1 移除。告警唯一规格为 <b>iOS 本地通知</b>；APNs、<code>device_tokens</code>、云端投递与邮件 fallback 延期到取得 Apple Developer 账户后的后续迭代。14 天计划、周重复模式、单日覆写和双向 handover 保留。计数：<b>3 Epic / 10 US / 31 AC 不变</b>，owner-scoped 集合为 <b>7+1</b>，屏幕由 5 变为 <b>24（共 41）</b>。</p>
+    <p style="margin-top:12px"><b>口径一致性。</b>这份规格里的每个数字与字段名都要与 Epics/User Stories/DOD、Analysis &amp; Design Report、Data Management Plan、ERD 和 Discovery deck 保持一致。它们互相交叉引用，一个走样的单元格就足以在 tutorial 上把整个故事拆掉。</p>
+  </div>
+</footer>
+</div>
+
+<script>
+document.querySelectorAll('button.b').forEach(function(b){
+  b.addEventListener('click',function(){
+    var open=b.dataset.act==='open';
+    document.querySelectorAll('details.ep').forEach(function(d){d.open=open;});
+  });
+});
+</script>

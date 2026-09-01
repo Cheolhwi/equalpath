@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend configuration and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: appwrite-backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            appwrite-backend/package-lock.json
+            appwrite-backend/functions/delete-account/package-lock.json
+            appwrite-backend/functions/iteration1-core/package-lock.json
+      - name: Install locked dependencies
+        run: |
+          npm ci
+          npm ci --prefix functions/delete-account
+          npm ci --prefix functions/iteration1-core
+      - name: Validate Appwrite configuration
+        run: npm run check
+      - name: Run backend tests
+        run: npm test
+
+  ios:
+    name: iOS simulator tests
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select an available iPhone simulator
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import subprocess
+
+          data = json.loads(subprocess.check_output(["xcrun", "simctl", "list", "devices", "available", "-j"]))
+          devices = [device for runtime in data["devices"].values() for device in runtime if "iPhone" in device["name"]]
+          if not devices:
+              raise SystemExit("No available iPhone simulator was found")
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as output:
+              output.write(f"SIMULATOR_ID={devices[0]['udid']}\n")
+              output.write(f"SIMULATOR_NAME={devices[0]['name']}\n")
+          PY
+      - name: Resolve Swift packages
+        working-directory: equalpath
+        run: xcodebuild -resolvePackageDependencies -project EqualPath.xcodeproj -scheme EqualPath
+      - name: Run iOS tests
+        working-directory: equalpath
+        run: |
+          xcodebuild test \
+            -project EqualPath.xcodeproj \
+            -scheme EqualPath \
+            -destination "platform=iOS Simulator,id=${SIMULATOR_ID}" \
+            -resultBundlePath "$RUNNER_TEMP/EqualPathTests.xcresult" \
+            CODE_SIGNING_ALLOWED=NO
+      - name: Upload Xcode result bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: EqualPathTests-${{ env.SIMULATOR_NAME }}
+          path: ${{ runner.temp }}/EqualPathTests.xcresult
+          if-no-files-found: warn
+          retention-days: 14
+

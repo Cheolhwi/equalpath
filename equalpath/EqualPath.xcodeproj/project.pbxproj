@@ -1,0 +1,464 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		300000000000000000000001 /* App/AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000001 /* App/AppState.swift */; };
+		300000000000000000000002 /* App/EqualPathApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000002 /* App/EqualPathApp.swift */; };
+		300000000000000000000003 /* Core/DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000003 /* Core/DesignSystem.swift */; };
+		300000000000000000000004 /* Core/Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000004 /* Core/Models.swift */; };
+		300000000000000000000005 /* Core/Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000005 /* Core/Components.swift */; };
+		300000000000000000000006 /* Services/EqualPathService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000006 /* Services/EqualPathService.swift */; };
+		300000000000000000000007 /* Services/AppwriteEqualPathService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000007 /* Services/AppwriteEqualPathService.swift */; };
+		300000000000000000000008 /* Services/LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000008 /* Services/LocalNotificationManager.swift */; };
+		300000000000000000000009 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000009 /* RootView.swift */; };
+		30000000000000000000000A /* Features/MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20000000000000000000000A /* Features/MainTabView.swift */; };
+		30000000000000000000000B /* Features/Onboarding/WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20000000000000000000000B /* Features/Onboarding/WelcomeView.swift */; };
+		30000000000000000000000C /* Features/Onboarding/OnboardingFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20000000000000000000000C /* Features/Onboarding/OnboardingFlowView.swift */; };
+		30000000000000000000000D /* Features/Tonight/TonightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20000000000000000000000D /* Features/Tonight/TonightView.swift */; };
+		30000000000000000000000E /* Features/Day/DayDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20000000000000000000000E /* Features/Day/DayDetailView.swift */; };
+		30000000000000000000000F /* Features/Plans/PlansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20000000000000000000000F /* Features/Plans/PlansView.swift */; };
+		300000000000000000000010 /* Features/People/PeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000010 /* Features/People/PeopleView.swift */; };
+		300000000000000000000011 /* Features/Settings/SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000011 /* Features/Settings/SettingsView.swift */; };
+		300000000000000000000012 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000013 /* Assets.xcassets */; };
+		300000000000000000000013 /* CoverageSummaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000014 /* CoverageSummaryTests.swift */; };
+		300000000000000000000014 /* Appwrite in Frameworks */ = {isa = PBXBuildFile; productRef = A00000000000000000000002 /* Appwrite */; };
+		300000000000000000000015 /* Resources/Fonts/CormorantGaramond.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000017 /* Resources/Fonts/CormorantGaramond.ttf */; };
+		300000000000000000000016 /* Resources/Fonts/CormorantGaramond-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000018 /* Resources/Fonts/CormorantGaramond-Italic.ttf */; };
+		300000000000000000000017 /* Resources/Fonts/InstrumentSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 200000000000000000000019 /* Resources/Fonts/InstrumentSans.ttf */; };
+		300000000000000000000018 /* Resources/Fonts/InstrumentSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20000000000000000000001A /* Resources/Fonts/InstrumentSans-Italic.ttf */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		100000000000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 900000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 600000000000000000000001;
+			remoteInfo = EqualPath;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		200000000000000000000001 /* App/AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/AppState.swift; sourceTree = "<group>"; };
+		200000000000000000000002 /* App/EqualPathApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/EqualPathApp.swift; sourceTree = "<group>"; };
+		200000000000000000000003 /* Core/DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core/DesignSystem.swift; sourceTree = "<group>"; };
+		200000000000000000000004 /* Core/Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core/Models.swift; sourceTree = "<group>"; };
+		200000000000000000000005 /* Core/Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Core/Components.swift; sourceTree = "<group>"; };
+		200000000000000000000006 /* Services/EqualPathService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/EqualPathService.swift; sourceTree = "<group>"; };
+		200000000000000000000007 /* Services/AppwriteEqualPathService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/AppwriteEqualPathService.swift; sourceTree = "<group>"; };
+		200000000000000000000008 /* Services/LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services/LocalNotificationManager.swift; sourceTree = "<group>"; };
+		200000000000000000000009 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		20000000000000000000000A /* Features/MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/MainTabView.swift; sourceTree = "<group>"; };
+		20000000000000000000000B /* Features/Onboarding/WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Onboarding/WelcomeView.swift; sourceTree = "<group>"; };
+		20000000000000000000000C /* Features/Onboarding/OnboardingFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Onboarding/OnboardingFlowView.swift; sourceTree = "<group>"; };
+		20000000000000000000000D /* Features/Tonight/TonightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Tonight/TonightView.swift; sourceTree = "<group>"; };
+		20000000000000000000000E /* Features/Day/DayDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Day/DayDetailView.swift; sourceTree = "<group>"; };
+		20000000000000000000000F /* Features/Plans/PlansView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Plans/PlansView.swift; sourceTree = "<group>"; };
+		200000000000000000000010 /* Features/People/PeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/People/PeopleView.swift; sourceTree = "<group>"; };
+		200000000000000000000011 /* Features/Settings/SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Features/Settings/SettingsView.swift; sourceTree = "<group>"; };
+		200000000000000000000012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		200000000000000000000013 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		200000000000000000000014 /* CoverageSummaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverageSummaryTests.swift; sourceTree = "<group>"; };
+		200000000000000000000015 /* EqualPath.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EqualPath.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		200000000000000000000016 /* EqualPathTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EqualPathTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		200000000000000000000017 /* Resources/Fonts/CormorantGaramond.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Resources/Fonts/CormorantGaramond.ttf; sourceTree = "<group>"; };
+		200000000000000000000018 /* Resources/Fonts/CormorantGaramond-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Resources/Fonts/CormorantGaramond-Italic.ttf"; sourceTree = "<group>"; };
+		200000000000000000000019 /* Resources/Fonts/InstrumentSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Resources/Fonts/InstrumentSans.ttf; sourceTree = "<group>"; };
+		20000000000000000000001A /* Resources/Fonts/InstrumentSans-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Resources/Fonts/InstrumentSans-Italic.ttf"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		500000000000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				300000000000000000000014 /* Appwrite in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		500000000000000000000002 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		400000000000000000000001 = {
+			isa = PBXGroup;
+			children = (
+				400000000000000000000002 /* EqualPath */,
+				400000000000000000000003 /* EqualPathTests */,
+				400000000000000000000004 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		400000000000000000000002 /* EqualPath */ = {
+			isa = PBXGroup;
+			children = (
+				200000000000000000000001 /* App/AppState.swift */,
+				200000000000000000000002 /* App/EqualPathApp.swift */,
+				200000000000000000000003 /* Core/DesignSystem.swift */,
+				200000000000000000000004 /* Core/Models.swift */,
+				200000000000000000000005 /* Core/Components.swift */,
+				200000000000000000000006 /* Services/EqualPathService.swift */,
+				200000000000000000000007 /* Services/AppwriteEqualPathService.swift */,
+				200000000000000000000008 /* Services/LocalNotificationManager.swift */,
+				200000000000000000000009 /* RootView.swift */,
+				20000000000000000000000A /* Features/MainTabView.swift */,
+				20000000000000000000000B /* Features/Onboarding/WelcomeView.swift */,
+				20000000000000000000000C /* Features/Onboarding/OnboardingFlowView.swift */,
+				20000000000000000000000D /* Features/Tonight/TonightView.swift */,
+				20000000000000000000000E /* Features/Day/DayDetailView.swift */,
+				20000000000000000000000F /* Features/Plans/PlansView.swift */,
+				200000000000000000000010 /* Features/People/PeopleView.swift */,
+				200000000000000000000011 /* Features/Settings/SettingsView.swift */,
+				200000000000000000000012 /* Info.plist */,
+				200000000000000000000013 /* Assets.xcassets */,
+				200000000000000000000017 /* Resources/Fonts/CormorantGaramond.ttf */,
+				200000000000000000000018 /* Resources/Fonts/CormorantGaramond-Italic.ttf */,
+				200000000000000000000019 /* Resources/Fonts/InstrumentSans.ttf */,
+				20000000000000000000001A /* Resources/Fonts/InstrumentSans-Italic.ttf */,
+			);
+			path = EqualPath;
+			sourceTree = "<group>";
+		};
+		400000000000000000000003 /* EqualPathTests */ = {
+			isa = PBXGroup;
+			children = (
+				200000000000000000000014 /* CoverageSummaryTests.swift */,
+			);
+			path = EqualPathTests;
+			sourceTree = "<group>";
+		};
+		400000000000000000000004 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				200000000000000000000015 /* EqualPath.app */,
+				200000000000000000000016 /* EqualPathTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		600000000000000000000001 /* EqualPath */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 700000000000000000000001 /* Build configuration list for PBXNativeTarget "EqualPath" */;
+			buildPhases = (
+				500000000000000000000003 /* Sources */,
+				500000000000000000000001 /* Frameworks */,
+				500000000000000000000004 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EqualPath;
+			packageProductDependencies = (
+				A00000000000000000000002 /* Appwrite */,
+			);
+			productName = EqualPath;
+			productReference = 200000000000000000000015 /* EqualPath.app */;
+			productType = "com.apple.product-type.application";
+		};
+		600000000000000000000002 /* EqualPathTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 700000000000000000000002 /* Build configuration list for PBXNativeTarget "EqualPathTests" */;
+			buildPhases = (
+				500000000000000000000005 /* Sources */,
+				500000000000000000000002 /* Frameworks */,
+				500000000000000000000006 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				100000000000000000000002 /* PBXTargetDependency */,
+			);
+			name = EqualPathTests;
+			productName = EqualPathTests;
+			productReference = 200000000000000000000016 /* EqualPathTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		900000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2600;
+				LastUpgradeCheck = 2600;
+				TargetAttributes = {
+					600000000000000000000001 = {
+						CreatedOnToolsVersion = 26.0;
+					};
+					600000000000000000000002 = {
+						CreatedOnToolsVersion = 26.0;
+						TestTargetID = 600000000000000000000001;
+					};
+				};
+			};
+			buildConfigurationList = 700000000000000000000003 /* Build configuration list for PBXProject "EqualPath" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 400000000000000000000001;
+			packageReferences = (
+				A00000000000000000000001 /* XCRemoteSwiftPackageReference "sdk-for-apple" */,
+			);
+			productRefGroup = 400000000000000000000004 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				600000000000000000000001 /* EqualPath */,
+				600000000000000000000002 /* EqualPathTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		500000000000000000000004 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				300000000000000000000012 /* Assets.xcassets in Resources */,
+				300000000000000000000015 /* Resources/Fonts/CormorantGaramond.ttf in Resources */,
+				300000000000000000000016 /* Resources/Fonts/CormorantGaramond-Italic.ttf in Resources */,
+				300000000000000000000017 /* Resources/Fonts/InstrumentSans.ttf in Resources */,
+				300000000000000000000018 /* Resources/Fonts/InstrumentSans-Italic.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		500000000000000000000006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		500000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				300000000000000000000001 /* App/AppState.swift in Sources */,
+				300000000000000000000002 /* App/EqualPathApp.swift in Sources */,
+				300000000000000000000003 /* Core/DesignSystem.swift in Sources */,
+				300000000000000000000004 /* Core/Models.swift in Sources */,
+				300000000000000000000005 /* Core/Components.swift in Sources */,
+				300000000000000000000006 /* Services/EqualPathService.swift in Sources */,
+				300000000000000000000007 /* Services/AppwriteEqualPathService.swift in Sources */,
+				300000000000000000000008 /* Services/LocalNotificationManager.swift in Sources */,
+				300000000000000000000009 /* RootView.swift in Sources */,
+				30000000000000000000000A /* Features/MainTabView.swift in Sources */,
+				30000000000000000000000B /* Features/Onboarding/WelcomeView.swift in Sources */,
+				30000000000000000000000C /* Features/Onboarding/OnboardingFlowView.swift in Sources */,
+				30000000000000000000000D /* Features/Tonight/TonightView.swift in Sources */,
+				30000000000000000000000E /* Features/Day/DayDetailView.swift in Sources */,
+				30000000000000000000000F /* Features/Plans/PlansView.swift in Sources */,
+				300000000000000000000010 /* Features/People/PeopleView.swift in Sources */,
+				300000000000000000000011 /* Features/Settings/SettingsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		500000000000000000000005 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				300000000000000000000013 /* CoverageSummaryTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		100000000000000000000002 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 600000000000000000000001 /* EqualPath */;
+			targetProxy = 100000000000000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		800000000000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4A5JS59VT6;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = EqualPath/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.equalpath.ios;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		800000000000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4A5JS59VT6;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = EqualPath/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.equalpath.ios;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		800000000000000000000003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.equalpath.ios.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EqualPath.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EqualPath";
+			};
+			name = Debug;
+		};
+		800000000000000000000004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.equalpath.ios.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EqualPath.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EqualPath";
+			};
+			name = Release;
+		};
+		800000000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		800000000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		700000000000000000000001 /* Build configuration list for PBXNativeTarget "EqualPath" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				800000000000000000000001 /* Debug */,
+				800000000000000000000002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		700000000000000000000002 /* Build configuration list for PBXNativeTarget "EqualPathTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				800000000000000000000003 /* Debug */,
+				800000000000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		700000000000000000000003 /* Build configuration list for PBXProject "EqualPath" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				800000000000000000000005 /* Debug */,
+				800000000000000000000006 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A00000000000000000000001 /* XCRemoteSwiftPackageReference "sdk-for-apple" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/appwrite/sdk-for-apple";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 18.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A00000000000000000000002 /* Appwrite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A00000000000000000000001 /* XCRemoteSwiftPackageReference "sdk-for-apple" */;
+			productName = Appwrite;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 900000000000000000000001 /* Project object */;
+}
