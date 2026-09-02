@@ -36,6 +36,9 @@ Selected approach: a monorepo with continuous integration on pushes and pull req
 
 - Structured bug and feature templates collect reproduction steps, acceptance impact, privacy/data concerns, and evidence.
 - Issue monitoring is advisory: feasibility is reported to the project owner; no issue is closed, labelled, or answered automatically.
+- A reproducible bug or feasible feature produces a review and implementation plan only. The plan must cover scope, affected acceptance criteria, proposed steps, tests, risks, and rollback considerations.
+- A positive triage result is not implementation approval. No code change, branch, commit, pull request, deployment, or live-data mutation may begin until the repository owner explicitly approves implementation.
+- Push and pull-request CI remain separate from issue intake; opening or updating an issue cannot trigger a build or code change.
 
 ## 3. Codex design review
 
@@ -67,5 +70,5 @@ Improvements applied after review:
 - [x] CD produces a versioned, checksummed release artifact.
 - [x] No automated workflow can mutate the live Appwrite project.
 - [x] Issue automation is review-only.
+- [x] Accepted issues stop at an owner-reviewable plan and require explicit implementation approval.
 - [x] Iteration 2 source directories are not modified or included.
-

@@ -3,6 +3,9 @@ description: Propose a change and explain its Iteration 1 relevance
 title: "[Feature] "
 labels: [enhancement, needs-triage]
 body:
+  - type: markdown
+    attributes:
+      value: Feature requests are reviewed for feasibility and planning only. A positive review does not authorise implementation; the repository owner decides whether work should begin.
   - type: textarea
     id: problem
     attributes:
@@ -32,4 +35,10 @@ body:
     attributes:
       label: Supporting evidence
       description: Link to research, screenshots, or an affected acceptance criterion without including private data.
-
+  - type: checkboxes
+    id: planning-only
+    attributes:
+      label: Triage boundary
+      options:
+        - label: I understand that a feasible feature will receive an implementation plan only and will not be implemented until the repository owner approves it.
+          required: true

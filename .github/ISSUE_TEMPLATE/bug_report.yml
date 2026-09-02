@@ -5,7 +5,7 @@ labels: [bug, needs-triage]
 body:
   - type: markdown
     attributes:
-      value: Thanks for helping review the frozen Iteration 1 baseline. Do not include personal health information, credentials, or live user data.
+      value: Thanks for helping review the frozen Iteration 1 baseline. Do not include personal health information, credentials, or live user data. Submitting an issue authorises review and planning only; implementation requires separate approval from the repository owner.
   - type: dropdown
     id: area
     attributes:
@@ -56,4 +56,10 @@ body:
       options:
         - label: I have removed credentials, tokens, personal health information, and live user data.
           required: true
-
+  - type: checkboxes
+    id: planning-only
+    attributes:
+      label: Triage boundary
+      options:
+        - label: I understand that a confirmed bug will receive an implementation plan only and will not be implemented until the repository owner approves it.
+          required: true
