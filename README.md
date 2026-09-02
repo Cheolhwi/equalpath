@@ -2,6 +2,14 @@
 
 This repository contains the isolated EqualPath Iteration 1 demo snapshot completed and verified on 30 August 2026. It is intended for stable demonstration, assessment, review, and recovery. Active Iteration 2 development remains in the separate main workspace and must not be carried out in this snapshot.
 
+## Interactive web preview
+
+[Open the EqualPath Iteration 1 Web Preview](https://cheolhwi.github.io/equalpath/)
+
+The responsive web preview demonstrates Tonight, Schedule, People and Me with local sample records. It is intentionally separated from the native application: it creates no account, performs no Google OAuth or Appwrite request, and cannot send, book or confirm care. GitHub Actions tests and rebuilds the preview before publishing it to GitHub Pages.
+
+[![Deploy Web Preview](https://github.com/Cheolhwi/equalpath/actions/workflows/pages.yml/badge.svg)](https://github.com/Cheolhwi/equalpath/actions/workflows/pages.yml)
+
 ## Safest way to run the demo
 
 1. Open `equalpath/EqualPath.xcodeproj` in Xcode.
