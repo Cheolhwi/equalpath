@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A safe, interactive web preview of the EqualPath Iteration 1 care-gap journey.">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>EqualPath · Iteration 1 Web Preview</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#preview-app">Skip to interactive preview</a>
+  <main class="page-shell">
+    <section class="context-panel" aria-labelledby="page-title">
+      <div class="brand-line"><span class="diamond" aria-hidden="true"></span> EqualPath</div>
+      <p class="eyebrow">Iteration 1 · interactive evidence</p>
+      <h1 id="page-title">Know about tomorrow <em>tonight.</em></h1>
+      <p class="lede">Explore the core care-gap journey using deterministic sample records. The preview demonstrates product behaviour without creating an account or contacting a live service.</p>
+      <ul class="safety-list" aria-label="Preview safety boundaries">
+        <li><span aria-hidden="true">✓</span> No Google sign-in</li>
+        <li><span aria-hidden="true">✓</span> No Appwrite writes</li>
+        <li><span aria-hidden="true">✓</span> No messages or bookings</li>
+      </ul>
+      <div class="journey-key" aria-label="Available preview states">
+        <span><i class="dot dot-gap"></i> Uncovered</span>
+        <span><i class="dot dot-covered"></i> No gap</span>
+        <span><i class="dot dot-unknown"></i> Unknown</span>
+      </div>
+      <a class="source-link" href="https://github.com/Cheolhwi/equalpath">View the frozen Iteration 1 source <span aria-hidden="true">↗</span></a>
+    </section>
+
+    <section class="device-stage" aria-label="EqualPath interactive phone preview">
+      <div class="phone-frame">
+        <header class="phone-status">
+          <span>21:04</span>
+          <span class="preview-pill">Safe preview</span>
+          <span aria-label="Offline sample data">Local</span>
+        </header>
+        <div id="preview-app" tabindex="-1"></div>
+        <div id="preview-announcer" class="sr-only" aria-live="polite"></div>
+      </div>
+      <p class="stage-note">Interactive product approximation · not a production web client</p>
+    </section>
+  </main>
+
+  <noscript><p class="noscript">JavaScript is required for the interactive preview. No network service is contacted.</p></noscript>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
