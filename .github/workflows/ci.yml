@@ -76,7 +76,7 @@ jobs:
             CODE_SIGNING_ALLOWED=NO
       - name: Upload Xcode result bundle
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: EqualPathTests-${{ env.SIMULATOR_NAME }}
           path: ${{ runner.temp }}/EqualPathTests.xcresult
