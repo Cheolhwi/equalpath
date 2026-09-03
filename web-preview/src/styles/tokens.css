@@ -1,0 +1,94 @@
+/* Design tokens transcribed from equalpath/EqualPath/Core/DesignSystem.swift.
+   Colour is never the only signal in this interface: every state also carries a
+   word (NO GAP / UNCOVERED / UNKNOWN) and an icon. */
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("../assets/fonts/CormorantGaramond.woff2") format("woff2-variations");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("../assets/fonts/CormorantGaramond-Italic.woff2") format("woff2-variations");
+  font-weight: 300 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("../assets/fonts/InstrumentSans.woff2") format("woff2-variations");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --canvas: #080d1e;
+  --canvas-deep: #04060f;
+  --surface: #0c1226;
+  --surface-alt: #0b1024;
+  --input: #0d1330;
+  --input-active: #101940;
+  --tab-bar: #060a18;
+
+  --gold: #e3b85c;
+  --gold-light: #f3d391;
+  --gold-muted: #dcc79c;
+  --blue: #4a6be8;
+  --blue-deep: #3c55c4;
+  --green: #2fb98a;
+  --green-text: #3fd09b;
+  --rose: #ff6b81;
+  --rose-text: #ff7a8c;
+  --teal: #4fc7c7;
+  --orange: #e28a3e;
+  --amber: #f0b65e;
+  --unknown: #3a4570;
+  --unknown-text: #8d99cf;
+
+  --text-primary: #f6efde;
+  --text-body: #efe7d6;
+  --text-secondary: #bfc7e2;
+  --text-tertiary: #a6aecc;
+  --text-muted: #9aa3c4;
+  --text-dim: #8f97ba;
+  --text-faint: #7983a8;
+  --text-faintest: #6e779c;
+  --text-disabled: #5e6790;
+
+  --track: #242e58;
+  --divider: rgb(226 214 186 / 0.09);
+  --border: rgb(226 214 186 / 0.14);
+  --border-strong: rgb(226 214 186 / 0.24);
+
+  --display: "Cormorant Garamond", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --body: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --radius-card: 20px;
+  --radius-note: 16px;
+  --radius-field: 18px;
+  --radius-chip: 15px;
+
+  --phone-width: 402px;
+  --tab-bar-height: 62px;
+
+  color-scheme: dark;
+}
+
+/* State colours are addressed by name so a status can be styled from data. */
+.state-covered {
+  --state: var(--green);
+  --state-text: var(--green-text);
+}
+.state-uncovered {
+  --state: var(--rose);
+  --state-text: var(--rose-text);
+}
+.state-unknown {
+  --state: var(--unknown);
+  --state-text: var(--unknown-text);
+}

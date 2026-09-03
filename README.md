@@ -2,11 +2,21 @@
 
 This repository contains the isolated EqualPath Iteration 1 demo snapshot completed and verified on 30 August 2026. It is intended for stable demonstration, assessment, review, and recovery. Active Iteration 2 development remains in the separate main workspace and must not be carried out in this snapshot.
 
-## Interactive web preview
+## Web build
 
-[Open the EqualPath Iteration 1 Web Preview](https://cheolhwi.github.io/equalpath/)
+[Open the EqualPath Iteration 1 web build](https://cheolhwi.github.io/equalpath/)
 
-The responsive web preview demonstrates Tonight, Schedule, People and Me with local sample records. It is intentionally separated from the native application: it creates no account, performs no Google OAuth or Appwrite request, and cannot send, book or confirm care. GitHub Actions tests and rebuilds the preview before publishing it to GitHub Pages.
+The Iteration 1 product runs in the browser: the complete setup flow, then care-gap
+discovery across the rolling fourteen-day window — Tonight, Schedule, the day timeline,
+People and Me. Entries can be added, edited and deleted, weekly patterns created, and a
+single occurrence changed or skipped. The interval rules, handover checks and weekly-pattern
+expansion are ported from `appwrite-backend/functions/iteration1-core/src/domain/`, so the
+web build reaches the same result as the server for the same records.
+
+It is deliberately separate from the native application: no account, no Google OAuth, no
+Appwrite request, nothing that can be sent, booked or confirmed. Everything is kept in the
+visitor's own browser. Source and details are in [`web-preview/`](web-preview/README.md);
+GitHub Actions runs the tests and rebuilds before publishing to GitHub Pages.
 
 [![Deploy Web Preview](https://github.com/Cheolhwi/equalpath/actions/workflows/pages.yml/badge.svg)](https://github.com/Cheolhwi/equalpath/actions/workflows/pages.yml)
 

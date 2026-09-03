@@ -11,3 +11,4 @@
 tmp/
 *.xcresult
 web-preview/dist/
+**/_legacy-vanilla-preview/
