@@ -78,7 +78,7 @@ textarea {
   gap: clamp(32px, 5vw, 72px);
   align-items: center;
   justify-content: center;
-  padding: 48px clamp(24px, 5vw, 72px);
+  padding: 26px clamp(24px, 5vw, 72px);
   background:
     radial-gradient(120% 80% at 12% 0%, rgb(74 107 232 / 0.16), transparent 60%),
     radial-gradient(90% 70% at 90% 10%, rgb(227 184 92 / 0.09), transparent 55%),
@@ -177,56 +177,224 @@ textarea {
   background: var(--state, var(--gold));
 }
 
+/* The device shell reproduces an iPhone 17 at true size: a 402 x 874 pt
+   display, an 11px bezel and a 3px metal rail, drawn once and scaled as a whole
+   so the app inside always lays out at phone point sizes. */
 .device-stage {
+  --screen-w: 402px;
+  --screen-h: 874px;
+  --bezel: 11px;
+  --rail: 3px;
+  --device-scale: 1;
   display: grid;
   justify-items: center;
-  gap: 14px;
+  gap: 18px;
+}
+
+.device-stage__slot {
+  width: calc(var(--device-w) * var(--device-scale));
+  height: calc(var(--device-h) * var(--device-scale));
+}
+
+.device {
+  position: relative;
+  width: var(--device-w);
+  height: var(--device-h);
+  padding: var(--rail);
+  border-radius: 68px;
+  transform: scale(var(--device-scale));
+  transform-origin: top left;
+  /* Brushed titanium: alternating light and dark facets around the band. */
+  background: linear-gradient(
+    148deg,
+    #7f8599 0%,
+    #414761 9%,
+    #9ba1b6 19%,
+    #2f3448 33%,
+    #6a7086 47%,
+    #262b3e 61%,
+    #878da3 75%,
+    #363b50 88%,
+    #6d7389 100%
+  );
+  box-shadow:
+    0 60px 110px rgb(0 0 0 / 0.62),
+    0 8px 26px rgb(0 0 0 / 0.45),
+    inset 0 0 0 1px rgb(255 255 255 / 0.14);
+}
+
+.device__bezel {
+  height: 100%;
+  padding: var(--bezel);
+  border-radius: 65px;
+  background: #04050b;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.05);
+}
+
+.device__rail {
+  position: absolute;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #969cb2, #4c5268 34%, #767c92 66%, #3c4256);
+}
+
+.device__rail--action {
+  left: -2px;
+  top: 148px;
+  height: 32px;
+}
+
+.device__rail--volume-up {
+  left: -2px;
+  top: 206px;
+  height: 60px;
+}
+
+.device__rail--volume-down {
+  left: -2px;
+  top: 280px;
+  height: 60px;
+}
+
+.device__rail--power {
+  right: -2px;
+  top: 232px;
+  height: 100px;
+}
+
+.device__rail--camera {
+  right: -2px;
+  top: 372px;
+  height: 32px;
+  background: linear-gradient(180deg, #b9bfd4, #6b7188 40%, #9aa0b6);
 }
 
 .phone {
-  width: var(--phone-width);
-  height: min(844px, calc(100vh - 140px));
-  min-height: 640px;
+  position: relative;
+  width: var(--screen-w);
+  height: var(--screen-h);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  position: relative;
+  border-radius: 54px;
   background: var(--canvas);
-  border-radius: 46px;
-  border: 1px solid var(--border-strong);
-  box-shadow:
-    0 40px 90px rgb(0 0 0 / 0.55),
-    0 0 0 10px rgb(8 13 30 / 0.9);
+}
+
+/* A faint diagonal reflection across the glass. */
+.phone::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  background: linear-gradient(
+    116deg,
+    rgb(255 255 255 / 0.055) 0%,
+    rgb(255 255 255 / 0.018) 16%,
+    transparent 32%,
+    transparent 70%,
+    rgb(255 255 255 / 0.022) 100%
+  );
+}
+
+.phone__island {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  width: 125px;
+  height: 37px;
+  border-radius: 999px;
+  background: #000;
+}
+
+.phone__island::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 13px;
+  transform: translateY(-50%);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #2f3a58, #05060c 68%);
+}
+
+.phone__home {
+  position: absolute;
+  bottom: 9px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  width: 139px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgb(246 239 222 / 0.34);
 }
 
 .phone__status {
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 26px 6px;
-  font-size: 11px;
+  height: 54px;
+  padding: 14px 30px 0;
+  color: var(--text-primary);
+  font-size: 14px;
   font-weight: 600;
-  color: var(--text-faint);
-  letter-spacing: 0.04em;
-  flex: none;
+  letter-spacing: 0.01em;
 }
 
-.phone__pill {
-  padding: 3px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  color: var(--gold);
-  font-size: 9.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+.phone__indicators {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-primary);
+}
+
+/* Ambient wallpaper glow behind the welcome screen. It sits at the screen
+   level rather than inside the scrolling content so the blur reaches the
+   rounded corners instead of ending on a hard edge. */
+.phone__ambient {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 420px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.phone__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(52px);
+  animation: drift 11s ease-in-out infinite alternate;
+}
+
+.phone__blob--blue {
+  width: 320px;
+  height: 320px;
+  background: rgb(74 107 232 / 0.55);
+  top: -120px;
+  left: -80px;
+}
+
+.phone__blob--gold {
+  width: 250px;
+  height: 250px;
+  background: rgb(227 184 92 / 0.3);
+  top: -90px;
+  right: -60px;
+  animation-delay: -4s;
 }
 
 .stage-note {
   margin: 0;
   color: var(--text-faintest);
   font-size: 11.5px;
+  line-height: 1.7;
   text-align: center;
-  max-width: 42ch;
+  max-width: 46ch;
 }
 
 .app {
@@ -334,7 +502,7 @@ textarea {
   grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid var(--divider);
   background: var(--tab-bar);
-  padding-bottom: env(safe-area-inset-bottom);
+  padding-bottom: 22px;
 }
 
 .tabbar__item {
@@ -375,21 +543,60 @@ textarea {
     display: block;
     background: var(--canvas);
   }
+
+  /* On a real phone the hardware is already there — drawing another one round
+     it would be absurd, so the shell, its chrome and the rail all go. */
   .context-rail,
   .stage-note,
+  .device__rail,
+  .phone__island,
+  .phone__home,
   .phone__status {
     display: none;
   }
-  .device-stage {
+
+  .device-stage,
+  .device-stage__slot,
+  .device__bezel {
     display: block;
+    width: 100%;
+    height: 100dvh;
+    padding: 0;
   }
+
+  .device {
+    width: 100%;
+    height: 100dvh;
+    padding: 0;
+    border-radius: 0;
+    background: var(--canvas);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .device__bezel {
+    border-radius: 0;
+    background: var(--canvas);
+    box-shadow: none;
+  }
+
   .phone {
     width: 100%;
     height: 100dvh;
-    min-height: 0;
     border-radius: 0;
-    border: none;
-    box-shadow: none;
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .phone::after {
+    display: none;
+  }
+
+  .tabbar {
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .sheet__footer {
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
   }
 }
 
@@ -924,45 +1131,14 @@ textarea {
 
 .welcome {
   position: relative;
+  z-index: 1;
   flex: 1;
   min-height: 0;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 28px;
-  isolation: isolate;
-}
-
-.welcome__backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-}
-
-.welcome__blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(46px);
-  animation: drift 11s ease-in-out infinite alternate;
-}
-
-.welcome__blob--blue {
-  width: 300px;
-  height: 300px;
-  background: rgb(74 107 232 / 0.55);
-  top: -150px;
-  left: -70px;
-}
-
-.welcome__blob--gold {
-  width: 240px;
-  height: 240px;
-  background: rgb(227 184 92 / 0.3);
-  top: -120px;
-  right: -50px;
-  animation-delay: -4s;
+  padding: 28px 28px 34px;
 }
 
 @keyframes drift {
@@ -975,7 +1151,7 @@ textarea {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .welcome__blob {
+  .phone__blob {
     animation: none;
   }
   * {
@@ -1503,7 +1679,7 @@ textarea {
 
 .sheet__footer {
   flex: none;
-  padding: 12px 22px calc(14px + env(safe-area-inset-bottom));
+  padding: 12px 22px 26px;
   border-top: 1px solid var(--divider);
   background: var(--canvas);
   display: grid;

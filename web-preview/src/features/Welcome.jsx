@@ -6,11 +6,6 @@ export default function Welcome() {
 
   return (
     <div className="welcome">
-      <div className="welcome__backdrop" aria-hidden="true">
-        <span className="welcome__blob welcome__blob--blue" />
-        <span className="welcome__blob welcome__blob--gold" />
-      </div>
-
       <p className="welcome__mark">EqualPath</p>
       <h1>
         {"Know about\ntomorrow "}
