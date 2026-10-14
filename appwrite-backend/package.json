@@ -15,6 +15,6 @@
     "push:all": "appwrite push all"
   },
   "devDependencies": {
-    "appwrite-cli": "27.2.1"
+    "appwrite-cli": "28.3.0"
   }
 }
